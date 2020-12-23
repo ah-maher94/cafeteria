@@ -1,0 +1,67 @@
+/* Orders Table */
+.display-order-table{
+	width: 100%;
+	border: 1px solid #ebebeb;
+}
+
+
+.display-order-table table tr th {
+	font-size: 16px;
+	color: #252525;
+	font-weight: 700;
+	border-bottom: 1px solid #ebebeb;
+	text-align: center;
+	padding: 18px 0 19px;
+	text-transform: uppercase;
+}
+
+.cart-table table tr td.order-date {
+	text-align: center;
+	width: 35%;
+
+}
+
+.cart-table table tr td.order-date h5 {
+	color: #252525;
+}
+
+.cart-table table tr td.order-status {
+	text-align: center;
+	width: 35%;
+
+}
+
+.cart-table table tr td.order-status h5 {
+	color: #252525;
+}
+
+.cart-table table tr td.p-price,
+.cart-table table tr td.total-price {
+	color: #e7ab3c;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.cart-table table tr td.total-price {
+	width: 20%;
+}
+
+
+/* Order Details */
+.displayOrder{
+	float:right;
+	height: 100%;
+	cursor: pointer;
+}
+.displayOrder:hover{
+	color: #252525;
+}
+
+/* Paging */
+.pageNum{
+	text-align: center;
+}
+.pageNum:hover {
+	cursor: pointer;
+	color: #252525;
+}
