@@ -1,10 +1,5 @@
 <?php
-            $dsn="mysql:dbname=cafeteria-php-project;dbhost=127.0.0.1;dbport=3306";
-            Define("DB_USER","root");
-            Define("DB_PASS","1894");
-    
-            $db= new PDO($dsn,DB_USER,DB_PASS);
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            require_once("config.php");
 
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
@@ -13,8 +8,6 @@
             }
 
             $startOrder = ($page -1) * 3;
-
-
 ?>
 
 
@@ -377,9 +370,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">ITI TEAM</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                         <div class="payment-pic">
                             <img src="img/payment-method.png" alt="">
@@ -402,6 +393,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/orders-users.js"></script>
 
 </body>
 
