@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/orders-users.css" type="text/css">
+    <link rel="stylesheet" href="css/products.css" type="text/css">
+
 </head>
 
 <body>
@@ -218,7 +220,34 @@
         <div class="container">
 
             <div class="row justify-content-end mb-5">
-                <button type="button" class="btn btn-primary">Add New Product</button>
+
+
+
+            <!-- Coffee Start -->
+
+                <div class="col-2">
+                <div class="coffee">
+                    <div class="tasse">
+
+                        <div class="smoke">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        </div>
+
+                        <div class="fillin"></div>
+                        <div class="griff"></div>
+                        <div class="untertasse"></div>
+                </div>
+                </div>
+                </div>
+            <!-- Coffee End -->
+
+
+
+                <div class="col-3">
+                <button type="button" id="newProduct" class="btn btn-primary">Add New Product</button>
+                </div>
             </div>
 
             <div class="row">

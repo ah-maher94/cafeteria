@@ -1,15 +1,7 @@
 <?php
+            
             require_once("config.php");
-
-            if(isset($_GET['page'])){
-                $page = $_GET['page'];
-            }else{
-                $page = 1;
-            }
-
-            $startOrder = ($page -1) * 3;
-
-
+            
 ?>
 
 
@@ -36,6 +28,8 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/orders-users.css" type="text/css">
+    <link rel="stylesheet" href="css/products.css" type="text/css">
+
 </head>
 
 <body>
@@ -119,18 +113,11 @@
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">My Orders</a></li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
-                                <li><a href="./faq.html">Faq</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="./home.html">Home</a></li>
+                        <li><a href="./products.html">Products</a></li>
+                        <li><a href="./blog.html">Users</a></li>
+                        <li><a href="./contact.html">Manual Order</a></li>
+                        <li><a href="./contact.html">Checks</a></li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -146,170 +133,167 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                        <span>My Orders</span>
+                        <a href="">Products</a>
+                        <span>Add Product</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Breadcrumb Section Begin -->
+    <!-- Breadcrumb Section End -->
+            
 
-    <!-- User Orders Section Begin -->
-    <section class="shopping-cart spad">
-        <div class="container">
+
+    <!-- Add Product Form Begin -->
+      <div class="container mt-5">  
+            <form autocomplete="off" method="POST" action="insert-product.php"  enctype="multipart/form-data">
+
+
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="cart-table">
-
-                    
-                    <table>
-                            <thead style="margin-bottom:30px;">
-                                <tr>
-                                    <th>Order Date</th>
-                                    <th>Order Status</th>
-                                    <th>Total Price</th>
-                                    <th><i class="ti-close"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
 
 
-                    <?php
+            <!-- Left Column Start -->
 
-                            $selectAll="select `orderId`, `orderDate`, `orderStatus`, `orderTotalPrice` from orders where userId=? order by orderStatus desc limit $startOrder,3";
-                            $selectAllStmt=$db->prepare($selectAll);
-                            $res=$selectAllStmt->execute([2]);
-                            $numrows=$selectAllStmt->rowCount();
-                            
-                            $rows=$selectAllStmt->fetchAll(PDO::FETCH_ASSOC);
-                            $totalOrders = 0;
-                            foreach($rows as $col){
+                <div class="col-6">
 
-                                // Insert Data Into Table
-                                echo "<tr><td class='order-date'>".$col['orderDate']."<span class='displayOrder' id='$col[orderId]'><i class='fa fa-expand' aria-hidden='true'></i></span></td>
-                                <td class='order-status'><h5>".$col['orderStatus']."</h5></td>
-                                <td class='total-price'>".$col['orderTotalPrice']."$</td>";
-                                
-                                if($col['orderStatus'] == 'Processing'){
-                                    echo "<td class='close-td'><a href='cancel-order-user.php?cancel=$col[orderId]'><i class='ti-close'></i></a></td>";
-                                }
-                                else{
-                                    echo "<td class='close-td'></td>";
-                                }
-                                
-                                echo "</tr>";
+                 <div class="form-row mt-3">
+                   <div class="col-8 mb-3">
+                     <label for="new-product-name">Product Name</label>
+                     <input type="text" class="form-control" name="productName" id="new-product-name" required>
+                     <div class="valid-feedback">
+                       Looks good!
+                     </div>
+                   </div>
+                </div>
 
 
-                                $totalOrders += $col['orderTotalPrice'];
+                 <div class="form-row mt-3">
+                    <div class="col-6 mb-3">
+                        <label for="new-product-price">Price</label>
+                        <input type="number" class="form-control" name="productPrice" id="new-product-price" min="1" required>
+                        <div class="valid-feedback">
+                        Looks good!
+                        </div>
+                    </div>
+                    <div class="col-2 mb-3 pt-4 align-items-end text-center">
+                        <h4 style="margin-top:10px"><span class="badge badge-secondary">EGP</span></h4>
+                    </div>
+                </div>
 
+                <!-- Select All Categories -->
+                <?php
+
+                    $selectCategories = "select * from category";
+                    $stmt = $db->prepare($selectCategories);
+                    $res = $stmt->execute();
+                    $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                ?>
+
+                 <div class="form-row mt-3">
+                   <div class="col-6 mb-3">
+                     <label for="new-product-category">Category</label>
+                     <select class="custom-select" id="new-product-category" name="category" aria-describedby="validationServer04Feedback" required>
+                       <option selected disabled value="">Choose...</option>
+
+                       <?php
+                            foreach($rows as $row){
+                                echo "<option value='".$row['categoryId']."'>".$row['categoryName']."</option>";
                             }
+                       ?>
 
-                    ?>
-
-                            </tbody>
-                        </table>
-
-
-                    <div class="row justify-content-around mt-3">
-                    <div class="col-lg-6 text-center">
-
-                        <?php 
-                        $selectAll="select * from orders";
-                        $selectAllStmt=$db->prepare($selectAll);
-                        $res=$selectAllStmt->execute();
-                        $rowsNum=$selectAllStmt->rowCount();
-                               
-                        // Previous Button
-                        if($page > 1){
-                             echo "<a href='view-orders.php?page=".($page-1)."' class='pageNum btn btn-secondary'>Previous</a>";
-                        }
-                        // Page Numbers
-                        for($pageNum = 1; $pageNum <= ceil($rowsNum/3); $pageNum++){
-                            ?> <a href="view-orders.php?page= <?php echo $pageNum ?>" class="pageNum btn btn-primary"> <?php echo $pageNum ?> </a> <?php
-                        }
-                        // Next Button
-                        if($pageNum-1 > $page){
-                            echo "<a href='view-orders.php?page=".($page+1)."' class='pageNum btn btn-secondary'>Next</a>";
-                        }
-
-                        
-                        ?>
-
-
-                        </div>
-
+                     </select>
+                     <div id="validationServer04Feedback" class="invalid-feedback">
+                       Please select a valid Category..
+                     </div>
+                   </div>
+                   <div class="col-4 mb-3 pt-4 align-items-end text-center">
+                    <h4 style="margin-top:10px"><span style="cursor: pointer;" class="addCategoryLabel badge badge-secondary">Add Category</span></h4>
                     </div>
+                 </div>
+
+
+                 <div class="form-row mt-3">
+                   <div class="col-6 mb-3">
+                     <label for="new-product-availability">Availability</label>
+                     <select class="custom-select" id="new-product-availability" name="availability" aria-describedby="validationServer04Feedback" required>
+                       <option selected disabled value="">Choose...</option>
+                       <option value="1">Available</option>
+                       <option value="0">Unavailable</option>
+                     </select>
+                     <div id="validationServer04Feedback" class="invalid-feedback">
+                       Please select a valid Room No..
+                     </div>
+                   </div>
+                 </div>
+
+
+
+                 <div class="form-row mt-3">
+                    <div class="col-4 mb-1">
+                    <label for="new-product-pic">Product Picture</label>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-4">
+                    <div class="col-8 mb-3 custom-file">
+                        <input type="file" name="profilePic" id="new-product-pic">
+                        <div class="valid-feedback">
+                        Looks good!
                         </div>
-                        <div class="col-lg-4 offset-lg-4">
-                            <div class="proceed-checkout">
-                                <ul>
-                                    <li class="cart-total">This Page Orders <span><?php echo $totalOrders."$"?></span></li>
-                                </ul>
-                                <a href="#" class="proceed-btn">Continue Shopping</a>
-                            </div>
-                        </div>
+                    </div>
+                 </div>
+
+
+                 <div class="form-row mb-5 mt-5 justify-content-center">
+                    <div class="col-4 col-lg-2">
+                        <button class="btn btn-primary mr-3" id="insertProduct" type="submit">Save</button>
+                    </div>
+                    <div class="col-4 col-lg-2 ml-1">
+                        <button class="btn btn-secondary" type="reset">Reset</button>
                     </div>
                 </div>
+
+
+                </div>
+            <!-- Left Column End -->
+
+
+            <!-- Right Column Start -->
+            <div class="col-6">
+
+                <div class="coffeeBigger" style="margin-top:200px;">
+                    <div class="tasse">
+
+                        <div class="smoke">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        </div>
+
+                        <div class="fillin"></div>
+                        <div class="griff"></div>
+                        <div class="untertasse"></div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </section>
-    <!-- User Orders Section End -->
+            <!-- Right Column End -->
 
 
 
 
-    <!-- Display Selected Order Start-->
-    <section>
-        <div class="container mb-5" id="selectedOrder">
-
-
-
-        </div>
-    </section>
-    <!-- Display Selected Order End-->
-
-    
-    
-    
-    
-    
-    
-    <!-- Partner Logo Section Begin -->
-<!--     <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
             </div>
+                 </form>
+
+
+
+                      
         </div>
-    </div> -->
-    <!-- Partner Logo Section End -->
+
+    <!-- Add Product Form End -->
+
+
 
     <!-- Footer Section Begin -->
     <footer class="footer-section">
@@ -376,9 +360,7 @@
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">ITI TEAM</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
-                        <div class="payment-pic">
-                            <!-- <img src="img/payment-method.png" alt=""> -->
-                        </div>
+
                     </div>
                 </div>
             </div>

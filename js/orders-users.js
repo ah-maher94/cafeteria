@@ -76,4 +76,30 @@ $(document).ready(function(){
     });
 
 
+    // Add New Product
+    $("#newProduct").click(function(){
+        location.href = "./add-product.php";
+    });
+
+
+/*     // Insert New Product Into Products Table
+    $("#insertProduct").click(function(){
+
+            var newProduct = {
+
+            name: $("#new-product-name").val(),
+            price: $("#new-product-price").val(),
+            category: $("#new-product-category").val(),
+            picture: $("#new-product-pic").val(),
+            availability: $("#new-product-availability").val()
+
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'insert-product.php',
+            data: newProduct
+        })
+    }) */
+
 });

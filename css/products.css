@@ -1,0 +1,164 @@
+.coffee {
+
+height: 40px;
+width: 55px;
+margin: 0 auto;
+z-index: 2;
+}
+
+.coffeeBigger {
+
+height: 200px;
+width: 40%;
+margin: 0 auto;
+z-index: 2;
+}
+
+.tasse {
+background-color: transparent;
+border: 2px solid #000;
+height: 100%;
+width: 100%;
+border-radius: 0 0 2rem 2rem;
+position: relative;
+margin: 0 auto;
+}
+
+.tasse .griff {
+position: absolute;
+height: 30%;
+width: 18%;
+background: transparent;
+border-radius: 100%;
+left: 100%;
+top: 10%;
+z-index: -1;
+border: 2px solid;
+}
+
+.tasse .fillin {
+background-color: #333;
+height: 100%;
+width: 100%;
+border: 0 solid transparent;
+border-radius: 0 0 2rem 2rem;
+position: absolute;
+left: 0;
+margin: 0 auto;
+right: 0;
+bottom: 0px;
+-webkit-transition: .5s all ease-in-out;
+transition: .5s all ease-in-out;
+z-index: -1;
+}
+
+.tasse .fillin:after {
+content: "";
+position: absolute;
+top: 0px;
+height: 100%;
+width: 100%;
+background-color: white;
+left: 0;
+right: 0;
+margin: 0 auto;
+-webkit-transition: .5s all ease-in-out;
+transition: .5s all ease-in-out;
+}
+
+.tasse:hover .fillin:after {
+height: 0;
+}
+
+.tasse .untertasse {
+z-index: 9;
+position: absolute;
+bottom: -2px;
+width: 100%;
+left: 0;
+right: 0;
+height: 4%;
+border-radius: 0 0 1rem 1rem;
+background-color: #000;
+margin: 0 auto;
+}
+
+.tasse .smoke span {
+width: 2px;
+height: 30px;
+background-color: #fff;
+position: absolute;
+top: -40px;
+opacity: 0.3;
+}
+
+.tasse .smoke span {
+width: 2px;
+height: 25px;
+background-color: #000;
+position: absolute;
+top: -40px;
+left: 15%;
+opacity: 0;
+animation-name: fader;
+animation-duration: 3s;
+animation-iteration-count: infinite;
+}
+
+@keyframes fader {
+0% {
+    top: -40px;
+    opacity: 0
+}
+50% {
+    opacity: 0.2
+}
+100% {
+    top: -60px;
+    opacity: 0
+}
+}
+
+.tasse .smoke span:nth-child(2) {
+left: 20%;
+height: 20px;
+animation-duration: 2.9s;
+animation-delay: .1s;
+}
+
+.tasse .smoke span:nth-child(3) {
+left: 40%;
+height: 28px;
+animation-duration: 2.8s;
+animation-delay: .2s;
+}
+.tasse .smoke span:nth-child(4) {
+left: 60%;
+height: 35px;
+animation-duration: 2.7s;
+animation-delay: .3s;
+}
+
+.tasse .smoke span:nth-child(5) {
+left: 80%;
+height: 40px;
+animation-duration: 2.6s;
+animation-delay: .4s;
+}
+
+#hastylink {
+position: fixed;
+bottom:5px;
+left: 0;
+right: 0;
+font-size: 13px;
+color: #000;
+text-decoration: none;
+text-align: center;
+}
+
+
+/* Add Product Table */
+.addCategoryLabel:hover{
+    background-color: blue;
+}
