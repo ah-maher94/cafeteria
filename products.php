@@ -1,13 +1,15 @@
 <?php
+            
             require_once("config.php");
-
+            
+            
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
             }else{
                 $page = 1;
             }
 
-            $startOrder = ($page -1) * 3;
+            $startProduct = ($page -1) * 3;
 
 
 ?>
@@ -119,18 +121,11 @@
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">My Orders</a></li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
-                                <li><a href="./faq.html">Faq</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="./home.html">Home</a></li>
+                        <li><a href="./products.html">Products</a></li>
+                        <li><a href="./blog.html">Users</a></li>
+                        <li><a href="./contact.html">Manual Order</a></li>
+                        <li><a href="./contact.html">Checks</a></li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -146,7 +141,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                        <span>My Orders</span>
+                        <span>Products</span>
                     </div>
                 </div>
             </div>
@@ -154,21 +149,88 @@
     </div>
     <!-- Breadcrumb Section Begin -->
 
-    <!-- User Orders Section Begin -->
+
+
+    <!-- Edit Product Modal Begin -->
+
+    <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="productModalLabel">Edit Product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <!-- Product Info -->
+        <form method="POST" action="update-product.php">
+        <div class="modal-body editProductModalBody">
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="updateProduct btn btn-primary" name="updateProduct">Update</button>
+        </div>
+        </form>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Edit Product Modal End -->
+
+
+    <!-- Confirm Delete Product Modal Begin -->
+
+    <div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="deleteProductModalLabel">Confirm Delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="POST" action="delete-product.php">
+        <div class="modal-body deleteProductModalBody">
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="Submit" class="deleteProduct btn btn-danger" name="deleteProduct">Delete</button>
+        </div>
+        </form>
+        </div>
+    </div>
+    </div>
+
+    <!-- Confirm Delete Product Modal End -->
+
+
+
+
+
+    <!-- Products Table Section Begin -->
     <section class="shopping-cart spad">
         <div class="container">
+
+            <div class="row justify-content-end mb-5">
+                <button type="button" class="btn btn-primary">Add New Product</button>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="cart-table">
-
-                    
                     <table>
                             <thead style="margin-bottom:30px;">
                                 <tr>
-                                    <th>Order Date</th>
-                                    <th>Order Status</th>
-                                    <th>Total Price</th>
-                                    <th><i class="ti-close"></i></th>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th colspan="2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -176,31 +238,31 @@
 
                     <?php
 
-                            $selectAll="select `orderId`, `orderDate`, `orderStatus`, `orderTotalPrice` from orders where userId=? order by orderStatus desc limit $startOrder,3";
+                            $selectAll="select `productId`, `productName`, `productPrice`, `productImage`, `productAvailability` from product limit $startProduct,3";
                             $selectAllStmt=$db->prepare($selectAll);
-                            $res=$selectAllStmt->execute([2]);
-                            $numrows=$selectAllStmt->rowCount();
+                            $res=$selectAllStmt->execute();
                             
                             $rows=$selectAllStmt->fetchAll(PDO::FETCH_ASSOC);
-                            $totalOrders = 0;
+
                             foreach($rows as $col){
 
                                 // Insert Data Into Table
-                                echo "<tr><td class='order-date'>".$col['orderDate']."<span class='displayOrder' id='$col[orderId]'><i class='fa fa-expand' aria-hidden='true'></i></span></td>
-                                <td class='order-status'><h5>".$col['orderStatus']."</h5></td>
-                                <td class='total-price'>".$col['orderTotalPrice']."$</td>";
+                                echo "<tr><td class='product-name'>".$col['productName']."</td>
+                                <td class='product-price'>".$col['productPrice']." EGP</td>
+                                <td class='product-image'><img height='80px' src='img/product/".$col['productImage']."' /></td>";
                                 
-                                if($col['orderStatus'] == 'Processing'){
-                                    echo "<td class='close-td'><a href='cancel-order-user.php?cancel=$col[orderId]'><i class='ti-close'></i></a></td>";
+                                if($col['productAvailability'] == 1){
+                                    echo "<td class='available pr-4'>Available</td>";
                                 }
                                 else{
-                                    echo "<td class='close-td'></td>";
+                                    echo "<td class='available pr-4'>Unavailable</td>";
                                 }
                                 
+                                // Action Buttons
+                                echo "<td class='actions'><button type='button' class='editProduct btn btn-success' id='".$col['productId']."'>Edit</button>
+                                                          <button type='button' class='confirmDeleteProduct btn btn-danger' id='".$col['productId']."'>Delete</button></td>";
+
                                 echo "</tr>";
-
-
-                                $totalOrders += $col['orderTotalPrice'];
 
                             }
 
@@ -214,22 +276,22 @@
                     <div class="col-lg-6 text-center">
 
                         <?php 
-                        $selectAll="select * from orders";
+                        $selectAll="select * from product";
                         $selectAllStmt=$db->prepare($selectAll);
                         $res=$selectAllStmt->execute();
                         $rowsNum=$selectAllStmt->rowCount();
                                
                         // Previous Button
                         if($page > 1){
-                             echo "<a href='view-orders.php?page=".($page-1)."' class='pageNum btn btn-secondary'>Previous</a>";
+                             echo "<a href='products.php?page=".($page-1)."' class='pageNum btn btn-secondary'>Previous</a>";
                         }
                         // Page Numbers
                         for($pageNum = 1; $pageNum <= ceil($rowsNum/3); $pageNum++){
-                            ?> <a href="view-orders.php?page= <?php echo $pageNum ?>" class="pageNum btn btn-primary"> <?php echo $pageNum ?> </a> <?php
+                            ?> <a href="products.php?page= <?php echo $pageNum ?>" class="pageNum btn btn-primary"> <?php echo $pageNum ?> </a> <?php
                         }
                         // Next Button
                         if($pageNum-1 > $page){
-                            echo "<a href='view-orders.php?page=".($page+1)."' class='pageNum btn btn-secondary'>Next</a>";
+                            echo "<a href='products.php?page=".($page+1)."' class='pageNum btn btn-secondary'>Next</a>";
                         }
 
                         
@@ -245,9 +307,6 @@
                         </div>
                         <div class="col-lg-4 offset-lg-4">
                             <div class="proceed-checkout">
-                                <ul>
-                                    <li class="cart-total">This Page Orders <span><?php echo $totalOrders."$"?></span></li>
-                                </ul>
                                 <a href="#" class="proceed-btn">Continue Shopping</a>
                             </div>
                         </div>
@@ -256,25 +315,7 @@
             </div>
         </div>
     </section>
-    <!-- User Orders Section End -->
-
-
-
-
-    <!-- Display Selected Order Start-->
-    <section>
-        <div class="container mb-5" id="selectedOrder">
-
-
-
-        </div>
-    </section>
-    <!-- Display Selected Order End-->
-
-    
-    
-    
-    
+    <!-- Products Table Section End -->
     
     
     <!-- Partner Logo Section Begin -->

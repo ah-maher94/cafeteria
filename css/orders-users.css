@@ -65,3 +65,55 @@
 	cursor: pointer;
 	color: #252525;
 }
+
+
+/* Products Table */
+.products-table{
+	width: 100%;
+	border: 1px solid #ebebeb;
+}
+
+
+.products-table table tr th {
+	font-size: 16px;
+	color: #252525;
+	font-weight: 700;
+	border-bottom: 1px solid #ebebeb;
+	text-align: center;
+	padding: 18px 0 19px;
+	text-transform: uppercase;
+}
+
+.cart-table table tr td.product-name {
+	text-align: center;
+	width: 20%;
+	color: #252525;
+}
+
+.cart-table table tr td.product-price {
+	text-align: center;
+	width: 20%;
+	color: #252525;
+}
+
+.cart-table table tr td.product-image {
+	text-align: center;
+	width: 25%;
+	color: #252525;
+}
+
+.cart-table table tr td.available {
+	text-align: right;
+	width: 15%;
+	color: #252525;
+}
+
+
+.cart-table table tr td.actions {
+	text-align: left;
+	width: 20%;
+}
+.cart-table table tr td.actions a:hover{
+color: black;
+
+}

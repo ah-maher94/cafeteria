@@ -5,10 +5,11 @@ require_once("config.php");
 
 if(isset($_GET["id"])){
     $orderId = $_GET["id"];
-    $cancelOrder = "select `productImage`, `productName`, `productPrice` from productorder po, product p where po.orderId=? and po.productId = p.productId";
-    $stmt = $db->prepare($cancelOrder);
+    $selectOrder = "select `productImage`, `productName`, `productPrice` from productorder po, product p where po.orderId=? and po.productId = p.productId";
+    $stmt = $db->prepare($selectOrder);
     $res = $stmt->execute(array($orderId));
     $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
     echo "<div class='row justify-content-between'>";
 
     foreach($rows as $col){
