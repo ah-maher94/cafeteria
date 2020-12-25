@@ -6,38 +6,80 @@
 // Include config file
 require_once "connection.php";
 
-$msg = ""; 
-if(isset($_POST['submitBtnLogin'])) {
-  $username = trim($_POST['username']);
-  $password = trim($_POST['password']);
-  if($username != "" && $password != "") {
-    try {
-      $query = "select * from `users` where `userEmail`=? and `userPassword`=?";
-      $stmt = $pdo->prepare($query);
-        
-    //   $stmt->bindParam('username', $username, PDO::PARAM_STR);
-    //   $stmt->bindValue('password', $password, PDO::PARAM_STR);
-      $result = $stmt->execute([$username, $password]);
-      $count = $stmt->rowCount();
-      $row   = $stmt->fetch(PDO::FETCH_ASSOC);
-      if($count == 1 && !empty($row)) {
-          header ('location: ./aa.php');
-        /******************** Your code ***********************/
-        // $_SESSION['sess_user_id']   = $row['uid'];
-        // $_SESSION['sess_user_name'] = $row['userName'];
-        // $_SESSION['sess_name'] = $row['userPassword'];
-       
-      } else {
-        $msg = "Invalid username and password!";
-      }
-    } catch (PDOException $e) {
-      echo "Error : ".$e->getMessage();
+$username = $password = "";
+$name_err =$password_err = "";
+
+$_SESSION['name'] = $_POST['username'];
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $username = trim($_POST["username"]);
+    // $username = trim($_POST["username"]);
+
+    if(empty($username)){
+        $name_err = "Please enter your email.";
+
+    } else{
+        $name_err = "";
     }
-  } else {
-    $msg = "Both fields are required!";
-  }
-}    
+
+    $password = trim($_POST["password"]);
+    if(empty($password)){
+        $password_err = "Please enter your password.";
+
+    } else{
+        $password_err = "";
+    }
+    // $username = trim($_POST['username']);
+    // $password = trim($_POST['password']);
+    if(isset($_POST['submitBtnLogin'])) {
+    
+    if($username != "" && $password != ""  && empty($name_err) && empty($password_err)) {
+        try {
+            $costmer = $_POST['costmer'];  
+        if ($costmer == "1") {          
+            $query = "select * from `users` where `userEmail`=? and `userPassword`=?";
+        
+        }
+        else {
+            $query = "select * from `admin` where `adminName`=? and `adminPassword`=?";
+        } 
+        // $query = "select * from `users` where `userEmail`=? and `userPassword`=?";
+            $stmt = $pdo->prepare($query);
+            
+        //   $stmt->bindParam('username', $username, PDO::PARAM_STR);
+        //   $stmt->bindValue('password', $password, PDO::PARAM_STR);
+        $result = $stmt->execute([$username, $password]);
+        $count = $stmt->rowCount();
+        $row   = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($count == 1 && !empty($row)) {
+            $_POST = array();
+            header ('location: ./index.php');
+            exit;
+            $username ="";
+            $password ="" ;
+            /******************** Your code ***********************/
+            // $_SESSION['sess_user_id']   = $row['uid'];
+            // $_SESSION['sess_user_name'] = $row['userName'];
+            // $_SESSION['sess_name'] = $row['userPassword'];
+        
+        } else {
+            // header ('location: ./login.html');
+            $name_err = "Invalid username!";
+            $password_err = "Invalid password!";
+        
+        }
+        } catch (PDOException $e) {
+        echo "Error : ".$e->getMessage();
+        }
+    } 
+    }  
+
+}
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -62,6 +104,7 @@ if(isset($_POST['submitBtnLogin'])) {
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/merna_style.css" type="text/css">
 </head>
 
 <body>
@@ -251,14 +294,24 @@ if(isset($_POST['submitBtnLogin'])) {
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>Login</h2>
-                        <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-                            <div class="group-input">
+                        <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
+                            <div class="group-input <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                                 <label for="username">Username or email address *</label>
-                                <input type="text" id="username" name="username">
+                                <input type="text" id="username" name="username"  value="<?php echo $username; ?>" >
+                                <span class="help-block"><?php echo $name_err;?></span>
+                               
                             </div>
-                            <div class="group-input">
+                            <div class="group-input  <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                                 <label for="pass">Password *</label>
-                                <input type="password" id="pass" name="password">
+                                <input type="password" id="pass" name="password" value="<?php echo $password; ?>" >
+                                <span class="help-block"><?php echo $password_err;?></span>
+                              
+                            </div>
+                            <div class="">        
+                                
+                                <input type="radio" id="user" name="costmer" value="1"> User
+                                <input type="radio" id="admin" name="costmer" value="2"> Admin
+
                             </div>
                             <div class="group-input gi-check">
                                 <div class="gi-more">

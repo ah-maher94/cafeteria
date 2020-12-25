@@ -45,13 +45,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Validate password
-    $input_password = trim($_POST["password"]);
+    $input_password =trim($_POST["password"]);
+
     if(empty($input_password)){
         $password_err = "Please enter your password.";     
     }elseif(!filter_var($input_password, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^([a-zA-Z0-9@*#]{8,30})$/")))){
         $password_err = " Password length between 8-30 char, able only special char [@ * #]";
     }else{
         $password = $input_password;
+        // $password = md5($input_password);
     }
 //  Validate confirm password
     $input_confirm_password = trim($_POST["confirm_password"]);
@@ -95,9 +97,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($name_err) && empty($email_err) && empty($password_err) && empty($ext_err) && empty($image_err) && empty($room_err) && empty($confirm_password_err)){
         // Prepare an insert statement
         // $sql = "INSERT INTO users (userName, userEmail, userPassword,userExt ) VALUES (:name, :email, :password, :ext)";
-       
-        $sql = "INSERT INTO users (userName, userEmail, userPassword,userExt,userImage,roomId) VALUES (:name, :email, :password, :ext, :image, :room)";
-       
+        /* Password. */
+        // $password = '***************';
+        /* Secure password hash. */
+        // $param_password = password_hash($password, PASSWORD_DEFAULT);
+        /* Values array for PDO. */
+        // $password = md5($password);
+        $sql = "INSERT INTO users (userName, userEmail, userPassword,userExt,userImage,roomId) VALUES (:name, :email, password, :ext, :image, :room)";
+        
+        // $values = [ ':password' => $hash];
+
         //opload image to server :)
         $file_tmp = $_FILES['image']['tmp_name'];
         move_uploaded_file($file_tmp, "./".$image);
@@ -372,22 +381,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <form   action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                             <div class="group-input <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                                 <label for="name">Name *</label>
-                                <input type="text" id="name" name="name" value="<?php echo $name; ?>"> 
+                                <input type="text" id="name" name="name" value="<?php echo $name; ?>"  autocomplete="off"> 
                                 <span class="help-block"><?php echo $name_err;?></span>
                             </div>
                             <div class="group-input <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                                 <label for="email"> email address *</label>
-                                <input type="text" id="email" name="email" value="<?php echo $email; ?>">
+                                <input type="text" id="email" name="email" value="<?php echo $email; ?>"  autocomplete="off">
                                 <span class="help-block"><?php echo $email_err;?></span>
                             </div>
                             <div class="group-input <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                                 <label for="pass">Password *</label>
-                                <input type="password" id="pass" name="password" value="<?php echo $password; ?>">
+                                <input type="password" id="pass" name="password" value="<?php echo $password; ?>"  autocomplete="off">
                                 <span class="help-block"><?php echo $password_err;?></span>
                             </div>
                             <div class="group-input <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?> ">
                                 <label for="con-pass">Confirm Password *</label>
-                                <input type="password" id="con-pass" name="confirm_password"  value="<?php echo $input_confirm_password; ?>">
+                                <input type="password" id="con-pass" name="confirm_password"  value="<?php echo $input_confirm_password; ?>"  autocomplete="off">
                                 <span class="help-block"><?php echo $confirm_password_err;?></span>
                             </div>
                             <!-- <div class="group-input">
