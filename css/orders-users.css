@@ -119,10 +119,7 @@ color: black;
 }
 
 /* order details */
-* {
-	box-sizing: border-box;
-  }
-  
+
   .wrapper {
 	display: flex;
 	justify-content: center;

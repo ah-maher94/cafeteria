@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Orders</title>
+    <title>Add User</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -133,8 +133,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="">Products</a>
-                        <span>Add Product</span>
+                        <a href="">Users</a>
+                        <span>Add User</span>
                     </div>
                 </div>
             </div>
@@ -143,43 +143,13 @@
     <!-- Breadcrumb Section End -->
             
 
-
-    <!-- Add Category Start -->
-
-
-    <div class="modal fade" id="insertCategoryModal" tabindex="-1" role="dialog" aria-labelledby="insertCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="insertCategoryModalLabel">Add Category</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-            <div class="modal-body insertCategoryModalBody">
-                    <label for="new-category-name">Category Name</label>
-                    <input type="text" name="categoryName" id="new-category-name">
-                    <label class="valid-feedback-new-category">Enter valid name</label>
-            </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" id="insertCategory" class="insertCategory btn btn-primary" name="insertCategory">Add</button>
-        </div>
-        </div>
-    </div>
-    </div>
-
-    <!-- Add Category End -->
-
-
     <!-- Add Product Form Begin -->
       <div class="container mt-5">  
-            <form autocomplete="off" method="POST" action="insert-product.php"  enctype="multipart/form-data">
+            <form autocomplete="off" method="POST" id="addUserForm" action="insert-user.php"  enctype="multipart/form-data">
             <!-- <form autocomplete="off" enctype="multipart/form-data"> -->
 
 
             <div class="row">
-
 
             <!-- Left Column Start -->
 
@@ -187,32 +157,64 @@
 
                  <div class="form-row mt-3">
                    <div class="col-8 mb-3">
-                     <label for="new-product-name">Product Name</label>
-                     <input type="text" class="form-control" name="productName" id="new-product-name" required>
+                     <label for="new-user-name">Name</label>
+                     <input type="text" class="form-control" name="userName" id="new-user-name" required>
                      <div class="valid-feedback">
                        Looks good!
                      </div>
+                     <div class="invalid-feedback">
+                        Please enter a valid username.
+                    </div>
                    </div>
                 </div>
 
 
                  <div class="form-row mt-3">
-                    <div class="col-6 mb-3">
-                        <label for="new-product-price">Price</label>
-                        <input type="number" class="form-control" name="productPrice" id="new-product-price" min="1" required>
+                    <div class="col-8 mb-3">
+                        <label for="new-user-email">Email</label>
+                        <input type="text" class="form-control" name="userEmail" id="new-user-email" required>
                         <div class="valid-feedback">
                         Looks good!
                         </div>
+                        <div class="invalid-feedback">
+                        Please enter a valid email.
                     </div>
-                    <div class="col-2 mb-3 pt-4 align-items-end text-center">
-                        <h4 style="margin-top:10px"><span class="badge badge-secondary">EGP</span></h4>
                     </div>
                 </div>
 
-                <!-- Select All Categories -->
+
+                <div class="form-row mt-3">
+                    <div class="col-6 mb-3">
+                        <label for="new-user-password">Password</label>
+                        <input type="password" class="form-control" name="userPassword" id="new-user-password" required>
+                        <div class="valid-feedback">
+                        Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                        Password should be between 8 and 30 characters.
+                    </div>
+                    </div>
+                </div>
+
+
+                <div class="form-row mt-3">
+                    <div class="col-6 mb-3">
+                        <label for="new-user-confirm">Confirm Password</label>
+                        <input type="password" class="form-control" name="confirmPassword" id="new-user-confirm" required>
+                        <div class="valid-feedback">
+                        Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                        Please match the valid password.
+                    </div>
+                    </div>
+                </div>
+
+
+                <!-- Select From Rooms -->
                 <?php
 
-                    $selectCategories = "select * from category";
+                    $selectCategories = "select * from room";
                     $stmt = $db->prepare($selectCategories);
                     $res = $stmt->execute();
                     $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -221,59 +223,61 @@
 
                  <div class="form-row mt-3">
                    <div class="col-6 mb-3 categories">
-                     <label for="new-product-category">Category</label>
-                     <select class="custom-select" id="new-product-category" name="category" aria-describedby="validationServer04Feedback" required>
-                       <option selected disabled value="">Choose...</option>
+                     <label for="user-room-num">Room No.</label>
+                     <select class="custom-select" id="user-room-num" name="userRoomNum" aria-describedby="validationServer04Feedback" required>
+                       <option selected value="">Choose...</option>
 
                        <?php
                             foreach($rows as $row){
-                                echo "<option value='".$row['categoryId']."'>".$row['categoryName']."</option>";
+                                echo "<option value='".$row['roomId']."'>".$row['roomNumber']."</option>";
                             }
                        ?>
 
                      </select>
                      <div id="validationServer04Feedback" class="invalid-feedback">
-                       Please select a valid Category..
+                       Please select a valid room number.
                      </div>
-                   </div>
-                   <div class="col-4 mb-3 pt-4 align-items-end text-center">
-                    <h4 style="margin-top:10px"><span style="cursor: pointer;" id="addCategory" class="addCategoryLabel badge badge-secondary">Add Category</span></h4>
+                     <div class="valid-feedback">
+                        Looks Good!
                     </div>
+                   </div>
                  </div>
 
 
                  <div class="form-row mt-3">
                    <div class="col-6 mb-3">
-                     <label for="new-product-availability">Availability</label>
-                     <select class="custom-select" id="new-product-availability" name="availability" aria-describedby="validationServer04Feedback" required>
-                       <option selected disabled value="">Choose...</option>
-                       <option value="1">Available</option>
-                       <option value="0">Unavailable</option>
-                     </select>
-                     <div id="validationServer04Feedback" class="invalid-feedback">
-                       Please select a valid Room No..
+                     <label for="new-user-name">Ext.</label>
+                     <input type="number" class="form-control" name="userExt" id="new-user-ext" min="1" required>
+                     <div class="valid-feedback">
+                       Looks good!
                      </div>
+                     <div class="invalid-feedback">
+                        Please enter Ext.
+                    </div>
                    </div>
-                 </div>
+                </div>
 
 
 
                  <div class="form-row mt-3">
                     <div class="col-4 mb-1">
-                    <label for="new-product-pic">Product Picture</label>
+                    <label for="new-product-pic">Profile Picture</label>
                     </div>
                     <div class="col-8 mb-3 custom-file">
-                        <input type="file" name="profilePic" id="new-product-pic">
+                        <input type="file" name="profilePic" id="new-user-pic">
                         <div class="valid-feedback">
                         Looks good!
                         </div>
+                        <div class="invalid-feedback">
+                        Please select a picture.
+                    </div>
                     </div>
                  </div>
 
 
                  <div class="form-row mb-5 mt-5 justify-content-center">
                     <div class="col-4 col-lg-2">
-                        <button class="btn btn-primary mr-3" id="insertProduct" type="submit">Save</button>
+                        <button class="btn btn-primary mr-3" name="insertUser" id="insertUser" type="submit">Save</button>
                     </div>
                     <div class="col-4 col-lg-2 ml-1">
                         <button class="btn btn-secondary" type="reset">Reset</button>

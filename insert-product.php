@@ -11,6 +11,12 @@ if(isset($_POST["productName"])){
     $productAvailability = $_POST["availability"];
     $productCategory = $_POST["category"];
 
+/*     $productName = $_POST["productName"];
+    $productPrice = $_POST["productPrice"];
+    $productPicture = $_FILES["productPic"]["name"];
+    $productAvailability = $_POST["productAvailability"];
+    $productCategory = $_POST["productCategory"]; */
+
     // Upload Image
     $file_tmp = $_FILES['profilePic']['tmp_name'];
     move_uploaded_file($file_tmp, "img/product/".$productPicture);
@@ -21,9 +27,12 @@ if(isset($_POST["productName"])){
     $stmt = $db->prepare($selectProduct);
     $res = $stmt->execute([$productName, $productPrice, $productPicture, $productAvailability, $productCategory]);
 
-    var_dump ($res);
+    // var_dump ($res);
     if($res){
         header('location: ./add-product.php');
+    }else{
+        header('location: ./add-product.php');
+        echo "Not Inserted";
     }
 }
 
