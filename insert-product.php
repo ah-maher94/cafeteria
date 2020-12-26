@@ -11,12 +11,6 @@ if(isset($_POST["productName"])){
     $productAvailability = $_POST["availability"];
     $productCategory = $_POST["category"];
 
-/*     $productName = $_POST["productName"];
-    $productPrice = $_POST["productPrice"];
-    $productPicture = $_FILES["productPic"]["name"];
-    $productAvailability = $_POST["productAvailability"];
-    $productCategory = $_POST["productCategory"]; */
-
     // Upload Image
     $file_tmp = $_FILES['profilePic']['tmp_name'];
     move_uploaded_file($file_tmp, "img/product/".$productPicture);

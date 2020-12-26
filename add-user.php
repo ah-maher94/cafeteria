@@ -206,7 +206,7 @@
                         </div>
                         <div class="invalid-feedback">
                         Please match the valid password.
-                    </div>
+                        </div>
                     </div>
                 </div>
 
@@ -264,7 +264,7 @@
                     <label for="new-product-pic">Profile Picture</label>
                     </div>
                     <div class="col-8 mb-3 custom-file">
-                        <input type="file" name="profilePic" id="new-user-pic">
+                        <input type="file" name="profilePic" id="new-user-pic" accept="image/*">
                         <div class="valid-feedback">
                         Looks good!
                         </div>

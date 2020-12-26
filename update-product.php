@@ -11,6 +11,7 @@ if(isset($_POST["updateProduct"])){
     $productName = $_POST["productName"];
     $productPrice = $_POST["productPrice"];
     $productAvailability = 1;
+    
     if(($_POST["productAvailability"])=='Available'){
         $productAvailability = 1;
     }else{
@@ -24,7 +25,7 @@ if(isset($_POST["updateProduct"])){
     if($res){
        header('Location: ./products.php');
     }else{
-       header('Location: ./products.php');
+       header('Location: ./update-product-error.php');
        
     }
 }

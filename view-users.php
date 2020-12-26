@@ -7,7 +7,9 @@
                 $page = 1;
             }
 
-            $startOrder = ($page -1) * 3;
+            $startUser = ($page -1) * 3;
+
+
 ?>
 
 
@@ -18,7 +20,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Orders</title>
+    <title>Users</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -144,7 +146,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                        <span>My Orders</span>
+                        <span>Users</span>
                     </div>
                 </div>
             </div>
@@ -153,40 +155,73 @@
     <!-- Breadcrumb Section Begin -->
 
 
-    <!-- Filter By Date Section Begin -->
-
-    <div class="container mt-5" style="width:80%">
-
-            <div class="row justify-content-center">
-            
-                <div class="col-8 col-md-4">
-                    <input type="text" class="form-control" id="from-date" name="from-date"  placeholder="from ...">
-                    <div class="invalid-feedback">
-                    Please select date.
-                    </div>
-                </div>
-
-                <div class="col-8 col-md-4">
-                    <input type="text" class="form-control" id="to-date" name="to-date" placeholder="to ...">
-                    <div class="invalid-feedback">
-                        Please select date.
-                    </div>
-                </div>
-
-                <div class="col-5 col-md-2">
-                    <button type="button" class="btn btn-info" id="filter-orders">Search</button>
-                </div>
-
-            
-            </div>
 
 
+
+    <!-- Edit User Modal Begin -->
+
+    <form method="POST" action="update-user.php" id="updateUserForm">
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="userModalLabel">Edit User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <!-- User Info -->
+        <div class="modal-body editUserModalBody">
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="updateUser btn btn-primary" name="updateUser">Update</button>
+        </div>
+        </div>
     </div>
-    <!-- Filter By Date Section End -->
+    </div>
+            </form>
 
-    <!-- User Orders Section Begin -->
+    <!-- Edit User Modal End -->
+
+
+
+
+    <!-- Confirm Delete User Modal Begin -->
+
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="deleteUserModalLabel">Confirm Delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="POST" action="delete-user.php">
+        <div class="modal-body deleteUserModalBody">
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="Submit" class="deleteUser btn btn-danger" name="deleteUser">Delete</button>
+        </div>
+        </form>
+        </div>
+    </div>
+    </div>
+
+    <!-- Confirm Delete User Modal End -->
+
+
+
+
+    <!-- Users Section Begin -->
     <section class="shopping-cart spad">
-        <div class="container orders-container">
+        <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="cart-table">
@@ -195,45 +230,38 @@
                     <table>
                             <thead style="margin-bottom:30px;">
                                 <tr>
-                                    <th>Order Date</th>
-                                    <th>Order Status</th>
-                                    <th>Total Price</th>
-                                    <th><i class="ti-close"></i></th>
+                                    <th>Name</th>
+                                    <th>Room</th>
+                                    <th>Image</th>
+                                    <th>Ext</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
 
 
                     <?php
-                            
 
-                                $selectAll="select `orderId`, `orderDate`, `orderStatus`, `orderTotalPrice` from orders where userId=? order by orderStatus desc limit $startOrder,3";
-                                $selectAllStmt=$db->prepare($selectAll);
-                                $res=$selectAllStmt->execute([2]);
-                                $numrows=$selectAllStmt->rowCount();
-                                
-                                $rows=$selectAllStmt->fetchAll(PDO::FETCH_ASSOC);
-                                
-                                $totalOrders = 0;
-                                echo "<tbody id='order-table-body'>";
-                                foreach($rows as $col){
+                            $selectAll="select `userId`, `userName`, `roomNumber`, `userImage`, `userExt` from users u, room r where u.roomId = r.roomId limit $startUser,3";
+                            $selectAllStmt=$db->prepare($selectAll);
+                            $res=$selectAllStmt->execute([2]);
+                            $numrows=$selectAllStmt->rowCount();
+                            
+                            $rows=$selectAllStmt->fetchAll(PDO::FETCH_ASSOC);
+                            $totalOrders = 0;
+                            foreach($rows as $col){
 
                                 // Insert Data Into Table
-                                echo "<tr><td class='order-date'>".$col['orderDate']."<span class='displayOrder' id='$col[orderId]'><i class='fa fa-expand' aria-hidden='true'></i></span></td>
-                                <td class='order-status'><h5>".$col['orderStatus']."</h5></td>
-                                <td class='total-price'>".$col['orderTotalPrice']." EGP</td>";
+                                echo "<tr><td class='user-name'>".$col['userName']."</td>
+                                <td class='room-num'>".$col['roomNumber']."</td>
+                                <td class='user-image'><img src='img/users/".$col['userImage']."' height='100px'></td>
+                                <td class='user-ext'>".$col['userExt']."</td>";
                                 
-                                if($col['orderStatus'] == 'Processing'){
-                                    echo "<td class='close-td'><a href='cancel-order-user.php?cancel=$col[orderId]'><i class='ti-close'></i></a></td>";
-                                }
-                                else{
-                                    echo "<td class='close-td'></td>";
-                                }
-                                
+                                // Action Buttons
+                                echo "<td class='user-actions'><button type='button' class='editUser btn btn-success' id='".$col['userId']."'>Edit</button>
+                                                          <button type='button' class='confirmDeleteUser btn btn-danger' id='".$col['userId']."'>Delete</button></td>";
+
                                 echo "</tr>";
-
-
-                                $totalOrders += $col['orderTotalPrice'];
 
                             }
 
@@ -247,22 +275,22 @@
                     <div class="col-lg-6 text-center">
 
                         <?php 
-                        $selectAll="select * from orders where userId=?";
+                        $selectAll="select * from users";
                         $selectAllStmt=$db->prepare($selectAll);
-                        $res=$selectAllStmt->execute([2]);
+                        $res=$selectAllStmt->execute();
                         $rowsNum=$selectAllStmt->rowCount();
                                
                         // Previous Button
                         if($page > 1){
-                             echo "<a href='view-orders.php?page=".($page-1)."' class='pageNum btn btn-secondary'>Previous</a>";
+                             echo "<a href='view-users.php?page=".($page-1)."' class='pageNum btn btn-secondary'>Previous</a>";
                         }
                         // Page Numbers
                         for($pageNum = 1; $pageNum <= ceil($rowsNum/3); $pageNum++){
-                            ?> <a href="view-orders.php?page= <?php echo $pageNum ?>" class="pageNum btn btn-primary"> <?php echo $pageNum ?> </a> <?php
+                            ?> <a href="view-users.php?page= <?php echo $pageNum ?>" class="pageNum btn btn-primary"> <?php echo $pageNum ?> </a> <?php
                         }
                         // Next Button
                         if($pageNum-1 > $page){
-                            echo "<a href='view-orders.php?page=".($page+1)."' class='pageNum btn btn-secondary'>Next</a>";
+                            echo "<a href='view-users.php?page=".($page+1)."' class='pageNum btn btn-secondary'>Next</a>";
                         }
 
                         
@@ -279,7 +307,6 @@
                         <div class="col-lg-4 offset-lg-4">
                             <div class="proceed-checkout">
                                 <ul>
-                                    <li class="cart-total">This Page Orders <span><?php echo $totalOrders."$"?></span></li>
                                 </ul>
                                 <a href="#" class="proceed-btn">Continue Shopping</a>
                             </div>
@@ -289,26 +316,8 @@
             </div>
         </div>
     </section>
-    <!-- User Orders Section End -->
+    <!-- Users Section End -->
 
-
-
-
-    <!-- Display Selected Order Start-->
-    <section>
-        <div class="container mb-5" id="selectedOrder">
-
-
-
-        </div>
-    </section>
-    <!-- Display Selected Order End-->
-
-    
-    
-    
-    
-    
     
     <!-- Partner Logo Section Begin -->
 <!--     <div class="partner-logo">

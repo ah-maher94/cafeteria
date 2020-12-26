@@ -166,7 +166,7 @@
         </div>
 
         <!-- Product Info -->
-        <form method="POST" action="update-product.php">
+        <form method="POST" id="updateProductForm" action="update-product.php">
         <div class="modal-body editProductModalBody">
 
 
@@ -174,7 +174,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="updateProduct btn btn-primary" name="updateProduct">Update</button>
+            <button type="submit" class="btn btn-primary" id="updateProduct" name="updateProduct">Update</button>
         </div>
         </form>
         </div>

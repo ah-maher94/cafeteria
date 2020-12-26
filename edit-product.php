@@ -13,7 +13,6 @@ if(isset($_GET["id"])){
     $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach($rows as $col){
-
         ?>
         <div class='form-group'>
             <input type='hidden' class='form-control' name='productId' id='edit-product-id' value=' <?php echo $col["productId"]?> '>
