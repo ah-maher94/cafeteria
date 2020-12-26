@@ -6,10 +6,55 @@
 // Include config file
 require_once "connection.php";
 
+session_start();  
+// $host = "localhost";  
+// $username = "root";  
+// $password = "mokaneta2606";  
+// $database = "cafeteria";  
+$message = "";  
+// try  
+// {  
+//      $connect = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
+//      $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+//      //login session
+//      if(isset($_POST["login"]))  
+//      {  
+//           if(empty($_POST["username"]) || empty($_POST["password"]))  
+//           {  
+//                $message = '<label>All fields are required</label>';  
+//           }  
+//           else  
+//           {  
+//                $query = "SELECT * FROM users WHERE userName = :username AND userPassword = :password";  
+//                $statement = $connect->prepare($query);  
+//                $statement->execute(  
+//                     array(  
+//                          'username'     =>     $_POST["username"],  
+//                          'password'     =>     $_POST["password"]  
+//                     )  
+//                );  
+//                $count = $statement->rowCount();  
+//                if($count > 0)  
+//                {  
+//                     $_SESSION["username"] = $_POST["username"];  
+//                     header("location:login_success.php");  
+//                }  
+//                else  
+//                {  
+//                     $message = '<label>Wrong Data</label>';  
+//                }  
+//           }  
+//      }  
+// }  
+// catch(PDOException $error)  
+// {  
+//      $message = $error->getMessage();  
+// }
+
 $username = $password = "";
 $name_err =$password_err = "";
 
-$_SESSION['name'] = $_POST['username'];
+// $_SESSION['name'] = $_POST['username'];
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
@@ -104,7 +149,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  -->
     <link rel="stylesheet" href="css/merna_style.css" type="text/css">
+
+    <style>
+        .help-block{
+            color:red;
+        }
+    </style>
 </head>
 
 <body>
@@ -129,6 +183,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="ht-right">
                     <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    <?php
+                        // if($_post['username'] == ){
+
+                        //     $costmer = $_POST['costmer'];  
+                        //     if ($costmer == "1") {          
+                        //         // $query = "select * from `users` where `userEmail`=? and `userPassword`=?";
+
+                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome user</a>`;
+
+                        //     }
+                        //     else {
+                        //         // $query = "select * from `admin` where `adminName`=? and `adminPassword`=?";
+                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome admin</a>`;
+                        //     } 
+                        // }
+                    ?>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"

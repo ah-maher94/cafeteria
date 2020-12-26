@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $input_name = trim($_POST["name"]);
     if(empty($input_name)){
         $name_err = "Please enter your name.";
-    } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+    } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9]([.-](?![.-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/")))){
         $name_err = "Please enter a valid name without any special character.";
     } else{
         $name = $input_name;
@@ -73,19 +73,85 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
          $ext = $input_ext;
      }
       // Validate image
-      $input_image = trim($_FILES["image"]["name"]);
-      if(empty($input_image)){
-        $image_err = "Please enter an image.";
-    //   } 
-    //   elseif(!filter_var($input_ext, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^(0|[1-9][0-9]*)$/")))){
-    //     $ext_err = "this field is valid only a number.";
-      } else{
-          $image = $input_image;
-      }
+      $$uploadfile = trim($_FILES["image"]["name"]);
+
+    if(isset($_FILES["image"])) {
+
+        $uploadfile = $_FILES["image"];
+    
+        if($uploadfile["name"]!=""){
+    
+            $filename= $uploadfile["name"];
+            $filetmpname=$uploadfile["tmp_name"];
+            $filesize=$uploadfile["size"];
+            $exts=explode(".",$filename);
+            $exts= end($exts);
+    
+            $extensions=["png","jpg"];
+            // $errors=[];
+    
+            if(!in_array($exts,$extensions)){
+                $image_err="choose only png or jpg extenrion ";
+            }
+    
+            if($filesize> 1000000){
+                $image_err="this is file is to long, please choose image lessthan 50 MB";
+            }
+    
+            if(empty($image_err)){
+                echo "";
+                move_uploaded_file($filetmpname, $filename);
+    
+            }
+             else{
+                // $image_err = $error;
+
+             }
+         }
+    
+    }else{
+        echo " <br> No file choosen";
+    }
+    
+    
+    //   if(empty($input_image)){
+    //     $image_err = "Please enter an image.";
+      
+
+      
+    //   } else{
+    // if(isset($_FILES["images"])) {
+    //     $uploadfile = $_FILES["images"];
+
+    //     if($uploadfile["name"]!=""){
+    
+    //         $filename= $uploadfile["name"];
+    //         $filetmpname=$uploadfile["tmp_name"];
+    //         $filesize=$uploadfile["size"];
+    //         $ext=explode(".",$filename);
+    //         $ext= end($ext);
+    
+    //         $extensions=["png","jpg"];
+    //         $errors=[];
+    
+    //         if(!in_array($ext,$extensions)){
+    //             $errors[]="choose only png or jpg extenrion ";
+    //         }
+    
+    //         if($filesize> 1000000){
+    //             $errors[]="this is file is to long, please choose image lessthan 50 MB";
+    //         }
+    
+    //         if(empty($errors)){
+    //             echo "";
+    //             move_uploaded_file($filetmpname, $filename);
+    //       $image = $input_image;
+    //   }
+    // }
          // Validate room number
          $input_room = trim($_POST["room"]);
          if(empty($input_room)){
-           $room_err = "Please enter an image.";
+           $room_err = "Please enter your room.";
        //   } 
        //   elseif(!filter_var($input_ext, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^(0|[1-9][0-9]*)$/")))){
        //       $ext_err = "this field is valid only a number.";
@@ -103,7 +169,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // $param_password = password_hash($password, PASSWORD_DEFAULT);
         /* Values array for PDO. */
         // $password = md5($password);
-        $sql = "INSERT INTO users (userName, userEmail, userPassword,userExt,userImage,roomId) VALUES (:name, :email, password, :ext, :image, :room)";
+        $sql = "INSERT INTO users (userName, userEmail, userPassword,userExt,userImage,roomId) VALUES (:name, :email, :password, :ext, :image, :room)";
         
         // $values = [ ':password' => $hash];
 
@@ -115,7 +181,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":name", $param_name);
             $stmt->bindParam(":email", $param_email);
-            $stmt->bindParam(":password", $param_password);
+            $stmt->bindParam(":password",md5($param_password));
             $stmt->bindParam(":ext", $param_ext);
             $stmt->bindParam(":image", $param_image);
             $stmt->bindParam(":room", $param_room);
@@ -131,7 +197,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Records created successfully. Redirect to landing page
-                header("location: aa.php");
+                header("location: login.php");
                 exit();
             } else{
                 echo "Something went wrong. Please try again later.";
