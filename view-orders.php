@@ -1,5 +1,6 @@
 <?php
             require_once("config.php");
+            require_once("checkCookies.php");
 
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
@@ -57,7 +58,7 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    <a href="#" class="login-panel logout"><i class="fa fa-user"></i>Logout</a>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
@@ -209,7 +210,7 @@
 
                                 $selectAll="select `orderId`, `orderDate`, `orderStatus`, `orderTotalPrice` from orders where userId=? order by orderStatus desc limit $startOrder,3";
                                 $selectAllStmt=$db->prepare($selectAll);
-                                $res=$selectAllStmt->execute([2]);
+                                $res=$selectAllStmt->execute([$_COOKIE['userID']]);
                                 $numrows=$selectAllStmt->rowCount();
                                 
                                 $rows=$selectAllStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -249,7 +250,7 @@
                         <?php 
                         $selectAll="select * from orders where userId=?";
                         $selectAllStmt=$db->prepare($selectAll);
-                        $res=$selectAllStmt->execute([2]);
+                        $res=$selectAllStmt->execute([$_COOKIE['userID']]);
                         $rowsNum=$selectAllStmt->rowCount();
                                
                         // Previous Button

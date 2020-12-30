@@ -1,7 +1,8 @@
 <?php
             
             require_once("config.php");
-            
+            require_once("checkCookies.php");
+
 ?>
 
 
@@ -174,7 +175,7 @@
 
     <!-- Add Product Form Begin -->
       <div class="container mt-5">  
-            <form autocomplete="off" method="POST" action="insert-product.php"  enctype="multipart/form-data">
+            <form autocomplete="off" method="POST" id="addProductForm" action="insert-product.php"  enctype="multipart/form-data">
             <!-- <form autocomplete="off" enctype="multipart/form-data"> -->
 
 
@@ -190,8 +191,11 @@
                      <label for="new-product-name">Product Name</label>
                      <input type="text" class="form-control" name="productName" id="new-product-name" required>
                      <div class="valid-feedback">
-                       Looks good!
-                     </div>
+                    Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                    Please enter a valid name.
+                    </div>
                    </div>
                 </div>
 
@@ -202,6 +206,9 @@
                         <input type="number" class="form-control" name="productPrice" id="new-product-price" min="1" required>
                         <div class="valid-feedback">
                         Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                        Please enter a valid price.
                         </div>
                     </div>
                     <div class="col-2 mb-3 pt-4 align-items-end text-center">
@@ -223,7 +230,7 @@
                    <div class="col-6 mb-3 categories">
                      <label for="new-product-category">Category</label>
                      <select class="custom-select" id="new-product-category" name="category" aria-describedby="validationServer04Feedback" required>
-                       <option selected disabled value="">Choose...</option>
+                       <option selected value="">Choose...</option>
 
                        <?php
                             foreach($rows as $row){
@@ -232,9 +239,12 @@
                        ?>
 
                      </select>
-                     <div id="validationServer04Feedback" class="invalid-feedback">
-                       Please select a valid Category..
-                     </div>
+                     <div class="valid-feedback">
+                        Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                        Please select category.
+                        </div>
                    </div>
                    <div class="col-4 mb-3 pt-4 align-items-end text-center">
                     <h4 style="margin-top:10px"><span style="cursor: pointer;" id="addCategory" class="addCategoryLabel badge badge-secondary">Add Category</span></h4>
@@ -246,13 +256,16 @@
                    <div class="col-6 mb-3">
                      <label for="new-product-availability">Availability</label>
                      <select class="custom-select" id="new-product-availability" name="availability" aria-describedby="validationServer04Feedback" required>
-                       <option selected disabled value="">Choose...</option>
+                       <option selected value="">Choose...</option>
                        <option value="1">Available</option>
                        <option value="0">Unavailable</option>
                      </select>
-                     <div id="validationServer04Feedback" class="invalid-feedback">
-                       Please select a valid Room No..
-                     </div>
+                     <div class="valid-feedback">
+                        Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                        Please select a valid choice.
+                        </div>
                    </div>
                  </div>
 
@@ -263,9 +276,12 @@
                     <label for="new-product-pic">Product Picture</label>
                     </div>
                     <div class="col-8 mb-3 custom-file">
-                        <input type="file" name="profilePic" id="new-product-pic">
+                        <input type="file" name="profilePic" id="new-product-pic" accept="image/*">
                         <div class="valid-feedback">
                         Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                        Please select a valid picture.
                         </div>
                     </div>
                  </div>

@@ -1,7 +1,8 @@
 <?php
             
             require_once("config.php");
-            
+            require_once("checkCookies.php");
+
             
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
@@ -154,7 +155,7 @@
 
 
     <!-- Edit Product Modal Begin -->
-
+    <form method="POST" id="updateProductForm" action="update-product.php">
     <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -166,7 +167,6 @@
         </div>
 
         <!-- Product Info -->
-        <form method="POST" id="updateProductForm" action="update-product.php">
         <div class="modal-body editProductModalBody">
 
 
@@ -174,11 +174,12 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="updateProduct" name="updateProduct">Update</button>
+            <button type="submit" class="updateProduct btn btn-primary" name="updateProduct">Update</button>
         </div>
-        </form>
         </div>
     </div>
+        </form>
+
     </div>
 
 

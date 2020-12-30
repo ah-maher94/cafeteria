@@ -1,93 +1,15 @@
 <?php
-// Include config file
-require_once "ORMclass.php";
 
-session_start();  
-$message = "";  
 
-$username = $password = "";
-$name_err =$password_err =$userType_err= "";
+include 'userClass.php';
+require_once("checkCookies.php");
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(!isset($_POST['costmer']))
-    {
-        $userType_err="Please choose one";
-    }
-    $username = trim($_POST["username"]);
-    // $username = trim($_POST["username"]);
 
-    if(empty($username)){
-        $name_err = "Please enter your email.";
+$user= new user();
+$user->database_con();
 
-    } else{
-        $name_err = "";
-    }
 
-    $password = trim($_POST["password"]);
-    if(empty($password)){
-        $password_err = "Please enter your password.";
 
-    } else{
-        $password_err = "";
-    }
-    // $username = trim($_POST['username']);
-    // $password = trim($_POST['password']);
-    if(isset($_POST['submitBtnLogin'])) {
-    
-    if($username != "" && $password != ""  && empty($name_err) && empty($password_err) && empty($userType_err)) {
-        try {
-            $costmer = $_POST['costmer'];  
-        if ($costmer == "1") {          
-            $query = "select * from `users` where `userName`='".$username."' and `userPassword`='".md5($password)."'";
-        }
-        else {
-            $query = "select * from `admin` where `adminName`='".$username."' and `adminPassword`=".$password;
-        } 
-        $users=new ORM();
-        $connect=$users ->connect('cafateria','3306','root','sayed771995');
-        $res=$users -> executeQuery($query);
-        $records=$res -> fetchAll(PDO::FETCH_ASSOC);
-        var_dump($records);
-        $count = $res->rowCount();
-        if($count == 1 && !empty($records)) {
-            session_start();
-            setcookie('login','true');
-            setcookie('userID',$records[0]['userId']);
-            if(isset($_POST['remember']))
-            {
-                setcookie('remember','true');
-            }
-            if($costmer == "1")
-            {
-                setcookie('userRole','user');
-            }
-            else if($costmer == "2")
-            {
-                setcookie('userRole','admin');
-            }
-            $_POST = array();
-            header ('location: checks.php');
-            exit;
-            $username ="";
-            $password ="" ;
-            /******************** Your code ***********************/
-            // $_SESSION['sess_user_id']   = $row['uid'];
-            // $_SESSION['sess_user_name'] = $row['userName'];
-            // $_SESSION['sess_name'] = $row['userPassword'];
-        
-        } else {
-            // header ('location: ./login.html');
-            $name_err = "Invalid username!";
-            $password_err = "Invalid password!";
-        
-        }
-        } catch (PDOException $e) {
-        echo "Error : ".$e->getMessage();
-        }
-    } 
-    }  
-
-}
 ?>
 
 
@@ -101,9 +23,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
-
-    <!-- Google Font -->
+    <title>Products</title>
+      <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
@@ -116,15 +37,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  -->
-    <link rel="stylesheet" href="css/merna_style.css" type="text/css">
+    <link rel="stylesheet" href="css/orders-users.css" type="text/css">
+    <link rel="stylesheet" href="css/products.css" type="text/css">
 
     <style>
-        .help-block{
-            color:red;
-        }
+    #productcontainer{
+        padding-top:100px;
+        padding-bottom:100px;
+    }
     </style>
 </head>
 
@@ -150,22 +70,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="ht-right">
                     <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    <?php
-                        // if($_post['username'] == ){
-
-                        //     $costmer = $_POST['costmer'];  
-                        //     if ($costmer == "1") {          
-                        //         // $query = "select * from `users` where `userEmail`=? and `userPassword`=?";
-
-                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome user</a>`;
-
-                        //     }
-                        //     else {
-                        //         // $query = "select * from `admin` where `adminName`=? and `adminPassword`=?";
-                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome admin</a>`;
-                        //     } 
-                        // }
-                    ?>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
@@ -193,7 +97,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-lg-7">
+                    <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="#" class="input-group">
@@ -202,7 +106,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-3 text-right col-lg-3">
+                    <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
                             <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
@@ -309,102 +213,195 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </header>
     <!-- Header End -->
 
-    <!-- Breadcrumb Section Begin -->
-    <div class="breacrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Login</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb Form Section Begin -->
+                
+    
+  
+  
 
-    <!-- Register Section Begin -->
-    <div class="register-login-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
-                            <div class="group-input <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                                <label for="username">Username or email address *</label>
-                                <input type="text" id="username" name="username"  value="<?php echo $username; ?>" >
-                                <span class="help-block"><?php echo $name_err;?></span>
-                               
-                            </div>
-                            <div class="group-input  <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                                <label for="pass">Password *</label>
-                                <input type="password" id="pass" name="password" value="<?php echo $password; ?>" >
-                                <span class="help-block"><?php echo $password_err;?></span>
-                              
-                            </div>
-                            <div class="">        
-                                
-                                <input type="radio" id="user" name="costmer" value="1"> User
-                                <input type="radio" id="admin" name="costmer" value="2"> Admin
-                                <span class="help-block"><?php echo $userType_err;?></span>
-                            </div>
-                            <div class="group-input gi-check">
-                                <div class="gi-more">
-                                    <label for="save-pass">
-                                        Remember me
-                                        <input type="checkbox" id="save-pass" name="remember">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <a href="#" class="forget-pass">Forget your Password</a>
-                                </div>
-                            </div>
-                            <button type="submit" class="site-btn login-btn" name="submitBtnLogin">Sign In</button>
-                        </form>
-                        <div class="switch-login">
-                            <a href="./register.php" class="or-login">Or Create An Account</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Register Form Section End -->
 
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
+<!-- products -->
+
+<div class="container" id="productcontainer">
+
+<form method="POST" action="insert-orders.php" id="order-form">
+ <div class="row">
+   <div class="col-sm-12 col-md-7 " >
+
+   <!-- <form method="GET" id="bill"> -->
+
+
+
+
+<div class="make-order-table">
+
+
+<table id="bill">
+<tbody>
+
+
+
+
+</tbody>
+</table>
+
+
+</div>
+
+
+
+
+   <?php
+
+
+  ?>
+
+<div class="form-group">
+    <h5><span class='badge badge-primary mb-2 mt-5' id="orderNotes">Order Notes</span></h5>
+    <textarea class="form-control col-8" id="exampleFormControlTextarea1" rows="3" name="notes"></textarea>
+  </div>
+
+
+
+
+<?php
+
+echo "<h5><span class='badge badge-primary mb-3'>Room Number</span></h5>";
+$rows=$user->showAllRooms();
+
+
+echo "<label for='edit-user-room'>Room</label>
+<select class='custom-select col-6' id='edit-user-room' name='userRoom' aria-describedby='validationServer04Feedback' required>
+  <option disabled value=''>Choose...</option>";
+
+       foreach($rows as $row){
+
+            echo "<option value='".$row['roomId']."'>".$row['roomNumber']."</option>";
+       }
+
+echo "</select>
+<div id='validationServer04Feedback' class='invalid-feedback'>
+  Please select a valid Room Number..
+</div>";
+
+?>
+
+<div class="col-11 mt-3 align-items-end">Total Price <span class="badge badge-secondary totalPrice"></span>
+</div>
+
+<div class="col-6"><button type="submit" name='add-order' id="add-order" class="btn btn-success col-6 mt-5">Submit</button></div>
+
+
+
+</form>
+
+
+   </div>
+
+
+
+
+
+
+
+   <div class="col-sm-12 col-md-5" >
+
+
+
+   <?php
+echo "<div class='row justify-content-around mt-3 mb-3'>";
+
+$rows=$user->showAllUsers();
+
+
+echo "<h4><span for='select-user' class='badge badge-primary'>User Name</span></h4>
+    <select class='custom-select col-6' id='select-user' name='user-order-name' aria-describedby='validationServer04Feedback' required>
+  <option disabled value=''>Choose...</option>";
+
+       foreach($rows as $row){
+
+            echo "<option value='".$row['userId']."'>".$row['userName']."</option>";
+       }
+
+echo "</select>
+<div id='validationServer04Feedback' class='invalid-feedback'>
+  Please select a valid User..
+</div></div>";
+
+?>
+
+
+
+
+
+<?php 
+
+$rows=$user->showLatestProductroduct();
+echo "<h3><span class='badge badge-primary'>Latest Order</span></h3>";
+
+echo "<div class='row justify-content-around mt-3'>";
+  foreach($rows as $row){
+   
+
+    echo 
+    "<div class='col-6 col-sm-4 col-md-3 wrapperLatest align-items-end justify-content-center'>
+        <div class='card productCard text-center' style='width: 70%; height: 100%'>
+        <img class='card-img-top' height='65%' src='img/product/".$row['productImage']."' alt='Card image cap'>
+        <div class='card-title'>
+            <h5><span class='badge badge-pill badge-light'>".$row['productName']."</span></h5>
         </div>
+        </div>
+    </div>";
+
+    
+}
+
+echo "</div>";
+
+
+?>
+
+   <hr style='bprder:2px solid #000;'>
+
+
+      <?php
+
+
+$rows=$user->showproducts();
+
+echo "<div class='row justify-content-between'>";
+
+  foreach($rows as $row){
+
+
+    echo "<div class='col-6 col-sm-4 col-md-4 wrapperAll align-items-end justify-content-center'>
+    <div class='card productCard homeUser-products text-center'  style='width: 70%; height: 100%'>
+    <input type='hidden' name='id' value='".$row['productId']."' />
+    <img class='card-img-top buy' id='".$row['productId']."' height='65%' src='img/product/".$row['productImage']."' alt='Product'>
+    <div class='card-title'>
+        <h4><span class='badge badge-pill badge-light'>".$row['productName']."</span></h4>
     </div>
-    <!-- Partner Logo Section End -->
+    </div>
+    <span class='label'><span name='".$row['productPrice']."'>".$row['productPrice']." EGP</span></span>
+</div>";
+
+
+        
+
+}
+
+
+ 
+
+?>
+      </div>    
+   </div>
+ </div>
+</div>
+
+
+
+     
+
 
     <!-- Footer Section Begin -->
     <footer class="footer-section">
@@ -416,7 +413,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <a href="#"><img src="img/footer-logo.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
+                            <li>orderNotes: 60-49 Road 11378 New York</li>
                             <li>Phone: +65 11.188.888</li>
                             <li>Email: hello.colorlib@gmail.com</li>
                         </ul>
@@ -492,6 +489,108 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+
+
+
+
+    $(document).ready(function(){
+
+        
+  
+        // Prevent Duplication
+        $('.buy').click(function (){
+            
+/*             console.log(orderProducts);
+            console.log(orderProducts.includes($(this).attr('id'))); */
+
+            var orderProducts = [];
+            $("#bill tr").each(function(){
+                orderProducts.push($(this).attr("id"));
+            })
+            if(orderProducts.includes($(this).attr('id'))){
+                alert("You have already added this item");
+            }else{
+
+                orderProducts.push($(this).attr('id'));
+                $.ajax({
+                    type : 'GET',
+                    url : "add-home-user.php",
+                    data : 'id='+$(this).attr('id'),
+                    success : function(response) {
+                    $('#bill').append(response);
+
+        }
+     
+        });
+        
+        var totalOrder = 0;
+            $(".order-product-quantity-input").each(function(){
+              totalOrder += $(".order-product-quantity-input").next().val() * $(".order-product-quantity-input").val();
+              console.log($(".order-product-quantity-input").next().val());
+              console.log($(".order-product-quantity-input").val());
+            })
+            $(".totalPrice").html(totalOrder +  " EGP");
+            console.log( $(this).parent().parent().children('span :eq(2)').html() );
+    }
+
+    
+	});
+
+
+    $("#add-order").click(function(event){
+        event.preventDefault();
+        var count = 0;
+        $(".rowParent").each(function(){
+            count ++;
+        })
+
+        if(count > 0){
+            $("#order-form").submit();
+        }else{
+            alert("No Products Selected");
+        }
+
+    });
+
+    $(".order-product-quantity-input").on('input',function(){
+            var totalPrice = parseInt($(this).next().val()) * $(this).val();
+            $(".total-price").html(totalPrice  );
+            console.log(totalPrice);
+
+
+    });
+
+
+
+
+
+
+    // Increase Quantity
+
+
+
+
+
+
+
+  
+//////////////////////////
+
+
+
+
+	
+});
+
+
+  </script>
+ 
+ <script src="js/orders-users.js"></script>
+
+
+    
 </body>
 
 </html>

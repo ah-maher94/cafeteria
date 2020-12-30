@@ -1,7 +1,7 @@
 <?php
-session_start();
     
 require_once("config.php");
+require_once("checkCookies.php");
 
 if(isset($_GET["id"])){
     $orderId = $_GET["id"];

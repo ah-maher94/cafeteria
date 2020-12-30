@@ -1,20 +1,17 @@
 <?php
 
-session_start();
     
 require_once("config.php");
+require_once("checkCookies.php");
 
 
 if(isset($_POST["userId"])){
 
     $userId = $_POST["userId"];
     $userName = $_POST["userName"];
+    $userRoom = $_POST['userRoom'];
 
-    $retrieveRoomNum = "select roomId from room where roomNumber = ?";
-    $stmt = $db->prepare($retrieveRoomNum);
-    $userRoom = $stmt->execute(array($_POST["userRoom"]));
-
-    echo $userRoom;
+    // echo $userRoom;
 
     $userExt = $_POST["userExt"];
 

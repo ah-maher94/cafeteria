@@ -1,8 +1,8 @@
 <?php
 
-session_start();
     
 require_once("config.php");
+require_once("checkCookies.php");
 
 
 if(isset($_GET["id"])){
@@ -28,17 +28,30 @@ if(isset($_GET["id"])){
             Please enter a valid name.
             </div>
         </div>
-        <div class='form-group'>
-            <label for='edit-user-room' class='col-form-label'>Room No.</label>
-            <input type='text' class='form-control' name='userRoom' id='edit-user-room' value=' <?php echo $col["roomNumber"]?> '>
-            <div class="valid-feedback">
-            Looks good!
-            </div>
-            <div class="invalid-feedback">
-            Please select valid room.
-            </div>
-        </div>
-        <?php
+
+        <?php 
+        
+            $selectRooms = "select * from room";
+            $stmt = $db->prepare($selectRooms);
+            $res = $stmt->execute();
+            $roomRows=$stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+            echo "<label for='edit-user-room'>Room</label>
+            <select class='custom-select' id='edit-user-room' name='userRoom' aria-describedby='validationServer04Feedback' required>
+              <option disabled value=''>Choose...</option>";
+            
+                   foreach($roomRows as $row){
+                        if($row['roomId'] == $col['roomId']){
+                       echo "<option selected value='".$row['roomId']."'>".$row['roomNumber']."</option>";
+                    }else{
+                        echo "<option value='".$row['roomId']."'>".$row['roomNumber']."</option>";
+                    }
+                   }
+            
+            echo "</select>
+            <div id='validationServer04Feedback' class='invalid-feedback'>
+              Please select a valid Room Number..
+            </div>";
 
         echo "<div class='form-group'>
             <label for='edit-user-ext' class='col-form-label'>Ext.</label>

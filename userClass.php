@@ -1,4 +1,8 @@
 <?php
+
+require_once("checkCookies.php");
+
+
   class user{
 
     public $db;
@@ -15,9 +19,9 @@
     // connect to database
     function database_con(){
         
-        $dsn="mysql:dbname=cafeteria;dbhost=127.0.0.1;dbport=3306";
+        $dsn="mysql:dbname=cafeteria-php-project;dbhost=127.0.0.1;dbport=3306";
          Define("DB_USER","root");
-         Define("DB_PASS","");
+         Define("DB_PASS","1894");
          $this->db= new PDO($dsn,DB_USER,DB_PASS);
  
          try{
@@ -31,10 +35,29 @@
        function showLatestProductroduct()
        {
         $data=array();
-        $selectQry='select * from product order by productId DESC limit 1;';
-        $selectstmt=$this->db->prepare($selectQry);
-        $selectstmt->execute();
+        if($_COOKIE['userRole'] == 'user'){
+          $selectQry='select `productImage`, `productName`, `productPrice`, `quantity` 
+          from productorder po, product p, orders o where po.orderId=o.orderId and po.productId = p.productId 
+          and po.orderId= (select `orderId` from orders where userId = ? order by orderDate desc limit 1)';
+          $selectstmt=$this->db->prepare($selectQry);
+          $selectstmt->execute([$_COOKIE['userID']]);
+        }else{
+          $selectQry='select `productImage`, `productName`, `productPrice`, `quantity` 
+          from productorder po, product p, orders o where po.orderId=o.orderId and po.productId = p.productId 
+          and po.orderId= (select `orderId` from orders order by orderDate desc limit 1)';
+          $selectstmt=$this->db->prepare($selectQry);
+          $selectstmt->execute();
+        }
+
         $rows=$selectstmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+/*         $selectOrder = "select `productImage`, `productName`, `productPrice`, `quantity` 
+        from productorder po, product p, orders o where po.orderId=o.orderId and po.productId = p.productId 
+        and po.orderId= (select `orderId` from orders where userId = 2 order by orderDate desc limit 1)";
+        $stmt = $db->prepare($selectOrder);
+        $res = $stmt->execute([2]);
+        $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);  */
 
         
 
@@ -46,7 +69,7 @@
 
       function showproducts(){
         $data=array();
-        $selectQry='select * from product';
+        $selectQry='select * from product where productAvailability = 1';
         $selectstmt=$this->db->prepare($selectQry);
         $selectstmt->execute();
         $rows=$selectstmt->fetchAll(PDO::FETCH_ASSOC);
@@ -97,8 +120,25 @@
         return $data;
       }
 
+      
+function showAllRooms(){
+  $selectRooms = "select * from room";
+$stmt = $this->db->prepare($selectRooms);
+$stmt->execute();
+$roomRows=$stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+return $roomRows;
+}
     
-    
+
+function showAllUsers(){
+  $selectUsers = "select * from users";
+$stmt = $this->db->prepare($selectUsers);
+$stmt->execute();
+$userRows=$stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+return $userRows;
+}
       
     //  }
      

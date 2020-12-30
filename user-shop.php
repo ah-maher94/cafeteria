@@ -1,8 +1,8 @@
 <?php
-session_start();
 
 
 include 'userClass.php';
+require_once("checkCookies.php");
 
 
 $user= new user();
@@ -37,6 +37,8 @@ $user->database_con();
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/orders-users.css" type="text/css">
+    <link rel="stylesheet" href="css/products.css" type="text/css">
 
     <style>
     #productcontainer{
@@ -221,80 +223,145 @@ $user->database_con();
 
 <div class="container" id="productcontainer">
 
+<form method="POST" action="insert-orders.php" id="order-form">
  <div class="row">
    <div class="col-sm-12 col-md-7 " >
 
-   <form method="GET" id="bill">
+   <!-- <form method="GET" id="bill"> -->
+
+
+
+
+<div class="make-order-table">
+
+
+<table id="bill">
+<tbody>
+
+
+
+
+</tbody>
+</table>
+
+
+</div>
+
+
+
 
    <?php
 
 
-echo "<label>notes</label>";
-echo "<input type='text' name='notes'> <Br>";
-echo "<label>room number</label>";
-
-
-
-
-
-
-
-
   ?>
+
+<div class="form-group">
+    <h5><span class='badge badge-primary mb-2 mt-5' id="orderNotes">Order Notes</span></h5>
+    <textarea class="form-control col-8" id="exampleFormControlTextarea1" rows="3" name="notes"></textarea>
+  </div>
+
+
+
+
+<?php
+
+echo "<h5><span class='badge badge-primary mb-3'>Room Number</span></h5>";
+$rows=$user->showAllRooms();
+
+
+echo "<label for='edit-user-room'></label>
+<select class='custom-select col-6' id='edit-user-room' name='userRoom' aria-describedby='validationServer04Feedback' required>
+  <option disabled value=''>Choose...</option>";
+
+       foreach($rows as $row){
+
+            echo "<option value='".$row['roomId']."'>".$row['roomNumber']."</option>";
+       }
+
+echo "</select>
+<div id='validationServer04Feedback' class='invalid-feedback'>
+  Please select a valid Room Number..
+</div>";
+
+?>
+
+<div class="col-11 mt-3 align-items-end">Total Price <span class="badge badge-secondary totalPrice"></span>
+</div>
+
+<div class="col-6"><button type="submit" name='add-order' id="add-order" class="btn btn-success col-6 mt-5">Submit</button></div>
+
+
 
 </form>
 
+
    </div>
 
+
+
+
+
+
+
    <div class="col-sm-12 col-md-5" >
+
+
+
+
+
 
 <?php 
 
 $rows=$user->showLatestProductroduct();
+echo "<h3><span class='badge badge-primary'>Latest Order</span></h3>";
 
+echo "<div class='row justify-content-around mt-3'>";
   foreach($rows as $row){
    
-    echo 
-    "<div class='col-sm-3 col-md-3 homeUser-products'>";
-   echo "<input type='hidden' name='id' value=".$row['productId']." />
-    <div class='image'><img class='buy' id='".$row['productId']."' src='".$row['productImage']."' width='100px' height='100px' /></div>
-    <div class='name'>".$row['productName']."</div>
-    <div class='price'>EGP".$row['productPrice']."</div>
- 
-   
-    
-    </div>";
-        
 
+    echo 
+    "<div class='col-6 col-sm-4 col-md-3 wrapperLatest align-items-end justify-content-center'>
+        <div class='card productCard text-center' style='width: 70%; height: 100%'>
+        <img class='card-img-top' height='65%' src='img/product/".$row['productImage']."' alt='Card image cap'>
+        <div class='card-title'>
+            <h5><span class='badge badge-pill badge-light'>".$row['productName']."</span></h5>
+        </div>
+        </div>
+    </div>";
+
+    
 }
+
+echo "</div>";
+
 
 ?>
 
    <hr style='bprder:2px solid #000;'>
 
-      <div class="row">
+
       <?php
-
-
-
-
-
 
 
 $rows=$user->showproducts();
 
+echo "<div class='row justify-content-between'>";
+
   foreach($rows as $row){
-   
-    echo 
-    "<div class='col-sm-3 col-md-3 homeUser-products'>";
-   echo "<input type='hidden' name='id' value=".$row['productId']." />
-    <div class='image'><img class='buy' id='".$row['productId']."' src='".$row['productImage']."' width='100px' height='100px' /></div>
-    <div class='name'>".$row['productName']."</div>
-    <div class='price'>EGP".$row['productPrice']."</div>
- 
-   
-    
-    </div>";
+
+
+    echo "<div class='col-6 col-sm-4 col-md-4 wrapperAll align-items-end justify-content-center'>
+    <div class='card productCard homeUser-products text-center'  style='width: 70%; height: 100%'>
+    <input type='hidden' name='id' value='".$row['productId']."' />
+    <img class='card-img-top buy' id='".$row['productId']."' height='65%' src='img/product/".$row['productImage']."' alt='Product'>
+    <div class='card-title'>
+        <h4><span class='badge badge-pill badge-light'>".$row['productName']."</span></h4>
+    </div>
+    </div>
+    <span class='label'><span name='".$row['productPrice']."'>".$row['productPrice']." EGP</span></span>
+</div>";
+
+
         
 
 }
@@ -401,24 +468,90 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/main.js"></script>
 
     <script>
+
+
+
+
     $(document).ready(function(){
 
         
-
   
+        // Prevent Duplication
         $('.buy').click(function (){
+            
+/*             console.log(orderProducts);
+            console.log(orderProducts.includes($(this).attr('id'))); */
 
-        $.ajax({
-       type : 'GET',
-		   url : "add-home-user.php",
-		   data : 'id='+$(this).attr('id'),
-		  success : function(response) {
-			$('#bill').html(response);
+            var orderProducts = [];
+            $("#bill tr").each(function(){
+                orderProducts.push($(this).attr("id"));
+            })
+            if(orderProducts.includes($(this).attr('id'))){
+                alert("You have already added this item");
+            }else{
+
+                orderProducts.push($(this).attr('id'));
+                $.ajax({
+                    type : 'GET',
+                    url : "add-home-user.php",
+                    data : 'id='+$(this).attr('id'),
+                    success : function(response) {
+                    $('#bill').append(response);
 
         }
      
-		});
-	});	
+        });
+        
+        var totalOrder = 0;
+            $(".order-product-quantity-input").each(function(){
+              totalOrder += $(".order-product-quantity-input").next().val() * $(".order-product-quantity-input").val();
+              console.log($(".order-product-quantity-input").next().val());
+              console.log($(".order-product-quantity-input").val());
+            })
+            $(".totalPrice").html(totalOrder +  " EGP");
+            console.log( $(this).parent().parent().children('span :eq(2)').html() );
+    }
+
+    
+	});
+
+
+    $("#add-order").click(function(event){
+        event.preventDefault();
+        var count = 0;
+        $(".rowParent").each(function(){
+            count ++;
+        })
+
+        if(count > 0){
+            $("#order-form").submit();
+        }else{
+            alert("No Products Selected");
+        }
+
+    });
+
+    $(".order-product-quantity-input").on('input',function(){
+            var totalPrice = parseInt($(this).next().val()) * $(this).val();
+            $(".total-price").html(totalPrice  );
+            console.log(totalPrice);
+
+
+    });
+
+
+
+
+
+
+    // Increase Quantity
+
+
+
+
+
+
+
   
 //////////////////////////
 
@@ -428,8 +561,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	
 });
 
+
   </script>
  
+ <script src="js/orders-users.js"></script>
 
 
     

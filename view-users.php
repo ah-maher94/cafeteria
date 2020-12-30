@@ -1,5 +1,6 @@
 <?php
             require_once("config.php");
+            require_once("checkCookies.php");
 
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
@@ -9,6 +10,7 @@
 
             $startUser = ($page -1) * 3;
 
+            
 
 ?>
 

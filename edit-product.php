@@ -1,8 +1,8 @@
 <?php
 
-session_start();
     
 require_once("config.php");
+require_once("checkCookies.php");
 
 
 if(isset($_GET["id"])){
@@ -20,10 +20,22 @@ if(isset($_GET["id"])){
         <div class='form-group'>
             <label for='product-name' class='col-form-label'>Product Name</label>
             <input type='text' class='form-control' name='productName' id='edit-product-name' value=' <?php echo $col["productName"]?> '>
+            <div class="valid-feedback">
+            Looks good!
+            </div>
+            <div class="invalid-feedback">
+            Please enter a valid name.
+            </div>
         </div>
         <div class='form-group'>
             <label for='product-price' class='col-form-label'>Product Price</label>
             <input type='text' class='form-control' name='productPrice' id='edit-product-price' value=' <?php echo $col["productPrice"]?> '>
+            <div class="valid-feedback">
+            Looks good!
+            </div>
+            <div class="invalid-feedback">
+            Please enter a valid price.
+            </div>
         </div>
         <div class='form-group'>
             <label for='product-availability' class='col-form-label'>Product Availability</label><br>

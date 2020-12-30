@@ -1,5 +1,13 @@
 $(document).ready(function(){
 
+    // Check Login
+    $(".logout").click(function () {
+        $.post('checkCookies.php',{
+            cook: 'delete'
+        },function(){
+           window.location.replace("login.php");
+        });
+    })
 
     // Filter Orders By Date
     $.datepicker.setDefaults({
@@ -50,6 +58,68 @@ $(document).ready(function(){
     });
 
 
+    // Validate Product Info
+    $("#insertProduct").click(function(){
+
+        var valid = true;
+        var validImage = validate($("#new-product-pic").val());
+
+
+        if($("#new-product-name").val() == ""){
+            $("#new-product-name").addClass("is-invalid")
+            $("#new-product-name").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#new-product-name").removeClass("is-invalid")
+            $("#new-product-name").addClass("is-valid")
+        }
+        if($("#new-product-price").val() == ""){
+            $("#new-product-price").addClass("is-invalid")
+            $("#new-product-price").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#new-product-price").removeClass("is-invalid")
+            $("#new-product-price").addClass("is-valid")
+        }
+        if($("#new-product-category").val() == ""){
+            $("#new-product-category").addClass("is-invalid")
+            $("#new-product-category").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#new-product-category").removeClass("is-invalid")
+            $("#new-product-category").addClass("is-valid")
+        }
+        if($("#new-product-availability").val() == ""){
+            $("#new-product-availability").addClass("is-invalid")
+            $("#new-product-availability").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#new-product-availability").removeClass("is-invalid")
+            $("#new-product-availability").addClass("is-valid")
+        }
+        if($("#new-product-pic").val() == "" || validImage == false){
+            $("#new-product-pic").addClass("is-invalid")
+            $("#new-product-pic").removeClass("is-valid")
+            valid= false;
+
+        }else{
+            $("#new-product-pic").removeClass("is-invalid")
+            $("#new-product-pic").addClass("is-valid")
+        }
+
+        if(valid == true){
+            $("#addProductForm").submit();
+        }
+
+
+    });
+
+
+
+
+
+
+
     // Edit Product - Modal
     $(".editProduct").click(function(){
         $.ajax({
@@ -65,21 +135,36 @@ $(document).ready(function(){
 
 
     // Update Product
-/*     $(".updateProduct").click(function(){
-        var attributes = {
-            'productId': $("#edit-product-id").val(),
-            'productName': $("#edit-product-name").val(),
-            'productPrice': $("#edit-product-price").val(),
-            'productAvailability': $(".availability input[type='radio']:checked").val(),
-        };
+    $(".updateProduct").click(function(event){
 
-        $.ajax({
-            type: 'POST',
-            url: 'update-product.php',
-            data: attributes,
-        });
 
-    }); */
+        event.preventDefault();
+        var valid = true;
+
+        if( ($("#edit-product-name").val()).trim() == "" ){
+            $("#edit-product-name").addClass("is-invalid")
+            $("#edit-product-name").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#edit-product-name").removeClass("is-invalid")
+            $("#edit-product-name").addClass("is-valid")
+        }
+        if($("#edit-product-price").val() == "" || isNaN( $("#edit-product-price").val() ) ){
+            $("#edit-product-price").addClass("is-invalid")
+            $("#edit-product-price").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#edit-product-price").removeClass("is-invalid")
+            $("#edit-product-price").addClass("is-valid")
+        }
+
+
+        if(valid == true){
+            $("#updateProductForm").submit();
+        }
+
+
+    });
 
 
     // Confirm Delete Product - Modal
@@ -159,6 +244,7 @@ $(document).ready(function(){
         var patternPassword = /^([a-zA-Z0-9@*#]{8,30})$/;
         var valid = true;
         var validImage = validate($("#new-user-pic").val());
+        // console.log($("#new-user-pic").val());
 
         if($("#new-user-name").val() == "" || !( patternName.test($("#new-user-name").val()) )){
             $("#new-user-name").addClass("is-invalid")
@@ -302,6 +388,7 @@ $(document).ready(function(){
 
     });
 
+
 });
 
 
@@ -309,7 +396,7 @@ $(document).ready(function(){
 var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
 
 function validate(uploadedImage) {
-    console.log(uploadedImage);
+    // console.log(uploadedImage);
         var sFileName = uploadedImage;
             if (sFileName.length > 0) {
                 var blnValid = false;
@@ -323,7 +410,6 @@ function validate(uploadedImage) {
             }
                 
                 if (!blnValid) {
-                    alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
                     return false;
                 }
   

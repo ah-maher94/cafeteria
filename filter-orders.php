@@ -1,8 +1,8 @@
 <?php
 
-session_start();
     
 require_once("config.php");
+require_once("checkCookies.php");
 
 if(isset($_POST["from-date"],$_POST["to-date"] )){
     $fromDate = $_POST["from-date"];
@@ -10,11 +10,14 @@ if(isset($_POST["from-date"],$_POST["to-date"] )){
     // $startOrder = ($page -1) * 3;
     $totalOrders = 0;
 
+    if($_COOKIE['userRole'] == 'user'){
+        $userId = $_COOKIE['userID'];
+    }
 
     $selectAll="select `orderId`, `orderDate`, `orderStatus`, `orderTotalPrice` from orders where userId=? 
     and orderDate between '$fromDate' and '$toDate' order by orderDate desc";
     $selectAllStmt=$db->prepare($selectAll);
-    $res=$selectAllStmt->execute([2]);
+    $res=$selectAllStmt->execute([$userId]);
     $numrows=$selectAllStmt->rowCount();
     $rows=$selectAllStmt->fetchAll(PDO::FETCH_ASSOC);
     
