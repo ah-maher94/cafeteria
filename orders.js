@@ -2,7 +2,7 @@ $(document).ready(function(){
     var trigger=0;
     var triggerid=0;
     var previuostrigger=0;
-    $.post('../php_project/orders.php',{
+    $.post('orders.php',{
         userId: 1,
     },function(orders){
         $("#tables").html(orders);

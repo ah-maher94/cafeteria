@@ -1,97 +1,4 @@
-<?php
-// Include config file
-require_once "ORMclass.php";
-
-session_start();  
-$message = "";  
-
-$username = $password = "";
-$name_err =$password_err =$userType_err= "";
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(!isset($_POST['costmer']))
-    {
-        $userType_err="Please choose one";
-    }
-    $username = trim($_POST["username"]);
-    // $username = trim($_POST["username"]);
-
-    if(empty($username)){
-        $name_err = "Please enter your email.";
-
-    } else{
-        $name_err = "";
-    }
-
-    $password = trim($_POST["password"]);
-    if(empty($password)){
-        $password_err = "Please enter your password.";
-
-    } else{
-        $password_err = "";
-    }
-    // $username = trim($_POST['username']);
-    // $password = trim($_POST['password']);
-    if(isset($_POST['submitBtnLogin'])) {
-    
-    if($username != "" && $password != ""  && empty($name_err) && empty($password_err) && empty($userType_err)) {
-        try {
-            $costmer = $_POST['costmer'];  
-        if ($costmer == "1") {          
-            $query = "select * from `users` where `userName`='".$username."' and `userPassword`=".$password;
-        }
-        else {
-            $query = "select * from `admin` where `adminName`='".$username."' and `adminPassword`=".$password;
-        } 
-        $users=new ORM();
-        $connect=$users ->connect('cafateria','3306','root','sayed771995');
-        $res=$users -> executeQuery($query);
-        $records=$res -> fetchAll(PDO::FETCH_ASSOC);
-        var_dump($records);
-        $count = $res->rowCount();
-        if($count == 1 && !empty($records)) {
-            session_start();
-            setcookie('login','true');
-            setcookie('userID',$records[0]['userId']);
-            if(isset($_POST['remember']))
-            {
-                setcookie('remember','true');
-            }
-            if($costmer == "1")
-            {
-                setcookie('userRole','user');
-            }
-            else if($costmer == "2")
-            {
-                setcookie('userRole','admin');
-            }
-            $_POST = array();
-            header ('location: checks.php');
-            exit;
-            $username ="";
-            $password ="" ;
-            /******************** Your code ***********************/
-            // $_SESSION['sess_user_id']   = $row['uid'];
-            // $_SESSION['sess_user_name'] = $row['userName'];
-            // $_SESSION['sess_name'] = $row['userPassword'];
-        
-        } else {
-            // header ('location: ./login.html');
-            $name_err = "Invalid username!";
-            $password_err = "Invalid password!";
-        
-        }
-        } catch (PDOException $e) {
-        echo "Error : ".$e->getMessage();
-        }
-    } 
-    }  
-
-}
-?>
-
-
-
+<?php require_once('checkCookies.php')?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -116,14 +23,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  -->
-    <link rel="stylesheet" href="css/merna_style.css" type="text/css">
+    <link rel="stylesheet" href="ajax/css/product.css" type="text/css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <style>
-        .help-block{
-            color:red;
+        table{
+            max-width: 40vw;
+        }
+        #name{
+            min-width: 20vw;
+            text-align: center;
         }
     </style>
 </head>
@@ -149,23 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    <?php
-                        // if($_post['username'] == ){
-
-                        //     $costmer = $_POST['costmer'];  
-                        //     if ($costmer == "1") {          
-                        //         // $query = "select * from `users` where `userEmail`=? and `userPassword`=?";
-
-                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome user</a>`;
-
-                        //     }
-                        //     else {
-                        //         // $query = "select * from `admin` where `adminName`=? and `adminPassword`=?";
-                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome admin</a>`;
-                        //     } 
-                        // }
-                    ?>
+                    <a href="#" class="login-panel logout"><i class="fa fa-user"></i>Logout</a>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
@@ -206,7 +99,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <ul class="nav-right">
                             <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
-                                    <span>1</span>
+                                     <span>1</span>
                                 </a>
                             </li>
                             <li class="cart-icon"><a href="#">
@@ -281,7 +174,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
+                        <li><a href="orders.html">Orders</a></li>
                         <li><a href="#">Collection</a>
                             <ul class="dropdown">
                                 <li><a href="#">Men's</a></li>
@@ -289,7 +182,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <li><a href="#">Kid's</a></li>
                             </ul>
                         </li>
-                        <li><a href="./blog.html">Blog</a></li>
                         <li><a href="./contact.html">Contact</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
@@ -316,62 +208,76 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Login</span>
+                        <span>Ckecks</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Breadcrumb Form Section Begin -->
-
-    <!-- Register Section Begin -->
-    <div class="register-login-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
-                            <div class="group-input <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                                <label for="username">Username or email address *</label>
-                                <input type="text" id="username" name="username"  value="<?php echo $username; ?>" >
-                                <span class="help-block"><?php echo $name_err;?></span>
-                               
-                            </div>
-                            <div class="group-input  <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                                <label for="pass">Password *</label>
-                                <input type="password" id="pass" name="password" value="<?php echo $password; ?>" >
-                                <span class="help-block"><?php echo $password_err;?></span>
-                              
-                            </div>
-                            <div class="">        
-                                
-                                <input type="radio" id="user" name="costmer" value="1"> User
-                                <input type="radio" id="admin" name="costmer" value="2"> Admin
-                                <span class="help-block"><?php echo $userType_err;?></span>
-                            </div>
-                            <div class="group-input gi-check">
-                                <div class="gi-more">
-                                    <label for="save-pass">
-                                        Remember me
-                                        <input type="checkbox" id="save-pass" name="remember">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <a href="#" class="forget-pass">Forget your Password</a>
-                                </div>
-                            </div>
-                            <button type="submit" class="site-btn login-btn" name="submitBtnLogin">Sign In</button>
-                        </form>
-                        <div class="switch-login">
-                            <a href="./register.php" class="or-login">Or Create An Account</a>
-                        </div>
-                    </div>
-                </div>
+    <div class="container mt-3">
+        <form>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Date</span>
             </div>
-        </div>
+            <input type="date" class="form-control" id='dateFrom'>
+            <input type="date" class="form-control" id='dateTo'>
+          </div>  
+        </form>
     </div>
-    <!-- Register Form Section End -->
+    <div class="container mt-3 text-align-center"> 
+         <form>
+          <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend">
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
+                Dropdown button
+              </button>
+              <div class="dropdown-menu">
+               
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
 
+    <!-- table Section Begin -->
+    <div class="container">          
+        <table class="table  table-dark table-hover table-bordered">
+          <thead>
+            <tr>
+              <th id='name'>Name</th>
+              <th>Total Amount</th>
+            </tr>
+          </thead>
+          <tbody id='users'>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="container">          
+        <table class="table  table-dark table-hover table-bordered">
+          <thead>
+            <tr>
+              <th id='name'>Order Date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="orders">
+          </tbody>
+        </table>
+      </div>
+
+      
+    <!-- table Form Section End -->
+    
+    <!-- display order info -->
+
+    <section>
+        <div class="container mb-5" id="selectedOrder">
+            
+        </div>
+    </section>
     <!-- Partner Logo Section Begin -->
     <div class="partner-logo">
         <div class="container">
@@ -404,6 +310,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         </div>
     </div>
+    
     <!-- Partner Logo Section End -->
 
     <!-- Footer Section Begin -->
@@ -492,6 +399,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    
 </body>
-
+<script src="checks.js">
+</script>
+    
 </html>

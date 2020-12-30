@@ -1,7 +1,7 @@
 <?php
 session_start();
     
-require_once('ORMclass.php');
+require_once('../ORMclass.php');
 
 if(isset($_GET["id"])){
     $orderId = $_GET["id"];

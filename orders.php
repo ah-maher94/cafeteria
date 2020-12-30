@@ -3,17 +3,18 @@
  
  if(isset($_POST['userId']))
  {
+        $ID=$_COOKIE['userID'];
         $users=new ORM();
         $connect=$users ->connect('cafateria','3306','root','sayed771995');
         $query="select od.orderDate,un.userName,roomNumber,ue.userExt,od.orderStatus
         from orders od,users un ,room rn,users ue
-        where od.userId=un.userId and od.userId=".$_POST['userId']." and un.roomId=rn.roomId and ue.userId= od.userId and od.userId=un.userId 
+        where od.userId=un.userId and od.userId=".$ID." and un.roomId=rn.roomId and ue.userId= od.userId and od.userId=un.userId 
         ";
         $res=$users -> executeQuery($query);
         $records=$res -> fetchAll(PDO::FETCH_ASSOC);
         $idQuery='select orderId
         from orders  
-        where userId='.$_POST['userId'];
+        where userId='.$ID;
         $idres=$users -> executeQuery($idQuery);
         $idrecords=$idres -> fetchAll(PDO::FETCH_ASSOC);
         for($i=0;$i<count($records);$i++)

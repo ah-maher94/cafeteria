@@ -1,6 +1,14 @@
 var datefrom=0;
 var dateto=0;
 $(document).ready(function(){
+    $(".logout").click(function () {
+        $.post('checkCookies.php',{
+            cook: 'delete'
+        },function(){
+           window.location.replace("login.php");
+        });
+    })
+    
     $('#dateFrom').blur(function(e){
         if(e.target.value)
         {
@@ -34,12 +42,12 @@ $(document).ready(function(){
         // });
     });
     
-    $.post('../php_project/retriveUsers.php',{
+    $.post('retriveUsers.php',{
         Name: 'totalAmount'
     },function(data,status){
         $("#users").html(data);
     });
-    $.post('../php_project/retriveUsers.php',{
+    $.post('retriveUsers.php',{
         Name: 'username'
     },function(data,status){
         var stringsub=data.split('<br>');
@@ -54,7 +62,7 @@ $(document).ready(function(){
             }
         }
         $('.links').click(function(e){
-            $.post('../php_project/retriveUsers.php',{
+            $.post('retriveUsers.php',{
                 userid: e.target.id,
                 dateFrom: datefrom,
                 dateTo: dateto
@@ -69,7 +77,7 @@ $(document).ready(function(){
                 $(".orderrow").click(function(){
                     $.ajax({
                         type: 'GET',
-                        url: '../php_project/display-order-details.php',
+                        url: 'order-details/display-order-details.php',
                         data: 'id=' + $(this).attr("id"),
                         success: function(order){
                             $("#selectedOrder").html(order);
