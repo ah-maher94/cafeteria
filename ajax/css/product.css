@@ -1,0 +1,64 @@
+/* order details */
+
+.wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 90%;
+	height: 250px;
+  }
+  
+  .productCard{
+	border:0px;
+  }
+
+
+  .label {
+	position: absolute;
+	top: -7px;
+	left: 15px;
+  }
+  .label::after {
+	position: absolute;
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 35px solid transparent;
+	border-top: 6px solid #3498db;
+  }
+  .label span {
+	position: relative;
+	display: inline-block;
+	width: 84px;
+	padding: 12px 8px 6px;
+	background: #3498db;
+	border-radius: 0 8px 0 0;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1;
+	text-align: center;
+  }
+  .label span::before,
+  .label span::after {
+	position: absolute;
+	content: '';
+	display: block;
+  }
+  .label span::before {
+	top: 0;
+	left: -6px;
+	width: 6px;
+	height: 7px;
+	background: #3498db;
+  }
+  .label span::after {
+	top: 0;
+	left: -8px;
+	height: 7px;
+	width: 8px;
+	background: #888;
+	border-radius: 8px 8px 0 0;
+  }
