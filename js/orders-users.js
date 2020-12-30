@@ -7,7 +7,79 @@ $(document).ready(function(){
         },function(){
            window.location.replace("login.php");
         });
-    })
+    });
+
+
+    // Request Change Password
+    $("#changePassword").click(function(){
+        var emailPassword = $("#email-password").val();
+
+        $.ajax({
+            type:'GET',
+            url: 'change-password.php',
+            data: 'emailCheck='+ emailPassword,
+            success: function(response){
+                if(response == '1'){
+                    $("#email-password").addClass('is-valid');
+                    $("#email-password").removeClass('is-invalid');
+                    $("#changePasswordModal").modal("show");
+                }else{
+                    $("#email-password").addClass('is-invalid');
+                    $("#email-password").removeClass('is-valid');
+                }
+            }
+        });
+
+    });
+
+
+    // Request Change Password
+    $("#confirm-change-password").click(function(){
+        var emailPassword = $("#email-password").val();
+        var patternPassword = /^([a-zA-Z0-9@*#]{8,30})$/;
+        var valid = true;
+
+        if($("#new-password").val() == "" || !( patternPassword.test($("#new-password").val()) ) ){
+            $("#new-password").addClass("is-invalid")
+            $("#new-password").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#new-password").removeClass("is-invalid")
+            $("#new-password").addClass("is-valid")
+        }
+        if($("#confirm-new-password").val() != $("#new-password").val() || $("#confirm-new-password").val() == "" ){
+            $("#confirm-new-password").addClass("is-invalid")
+            $("#confirm-new-password").removeClass("is-valid")
+            valid= false;
+        }else{
+            $("#confirm-new-password").removeClass("is-invalid")
+            $("#confirm-new-password").addClass("is-valid")
+        }
+
+        if(valid == true){
+            $.ajax({
+                type:'GET',
+                url: 'change-password.php',
+                data: {'changedPassword': $("#new-password").val(), 
+                        'email': emailPassword},
+                success: function(response){
+                    if(response == '1'){
+                        $("#email-password").removeClass('is-valid');
+                        $("#email-password").removeClass('is-invalid');
+                        $("#email-password").val("");
+                        $("#changePasswordModal").modal("hide");
+                        $("#changedSuccessfullyModal").modal("show");
+                    }else{
+                        alert("Something went wrong, try again later");
+                    }
+                }
+            });
+        }
+
+
+    });
+
+
 
     // Filter Orders By Date
     $.datepicker.setDefaults({

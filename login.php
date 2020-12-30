@@ -41,10 +41,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $query = "select * from `users` where `userName`='".$username."' and `userPassword`='".md5($password)."'";
         }
         else {
-            $query = "select * from `admin` where `adminName`='".$username."' and `adminPassword`=".$password;
+            $query = "select * from `admin` where `adminName`='".$username."' and `adminPassword`='".$password."'";
         } 
         $users=new ORM();
-        $connect=$users ->connect('cafateria','3306','root','sayed771995');
+        $connect=$users ->connect('cafeteria-php-project','3306','root','1894');
         $res=$users -> executeQuery($query);
         $records=$res -> fetchAll(PDO::FETCH_ASSOC);
         var_dump($records);
@@ -357,7 +357,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                         <input type="checkbox" id="save-pass" name="remember">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <a href="#" class="forget-pass">Forget your Password</a>
+                                    <a href="./reset-password.php" class="forget-pass">Forget your Password</a>
                                 </div>
                             </div>
                             <button type="submit" class="site-btn login-btn" name="submitBtnLogin">Sign In</button>

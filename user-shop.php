@@ -322,7 +322,7 @@ echo "<div class='row justify-content-around mt-3'>";
     echo 
     "<div class='col-6 col-sm-4 col-md-3 wrapperLatest align-items-end justify-content-center'>
         <div class='card productCard text-center' style='width: 70%; height: 100%'>
-        <img class='card-img-top' height='65%' src='img/product/".$row['productImage']."' alt='Card image cap'>
+        <img class='card-img-top' height='70%' src='img/product/".$row['productImage']."' alt='Card image cap'>
         <div class='card-title'>
             <h5><span class='badge badge-pill badge-light'>".$row['productName']."</span></h5>
         </div>
@@ -353,7 +353,7 @@ echo "<div class='row justify-content-between'>";
     echo "<div class='col-6 col-sm-4 col-md-4 wrapperAll align-items-end justify-content-center'>
     <div class='card productCard homeUser-products text-center'  style='width: 70%; height: 100%'>
     <input type='hidden' name='id' value='".$row['productId']."' />
-    <img class='card-img-top buy' id='".$row['productId']."' height='65%' src='img/product/".$row['productImage']."' alt='Product'>
+    <img class='card-img-top buy pt-2' id='".$row['productId']."' height='65%' src='img/product/".$row['productImage']."' alt='Product'>
     <div class='card-title'>
         <h4><span class='badge badge-pill badge-light'>".$row['productName']."</span></h4>
     </div>

@@ -184,6 +184,76 @@ color: black;
   }
 
 
+  
+/* Display All Products */
+
+.wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 90%;
+	height: 250px;
+  }
+  
+  .productCard{
+	border:0px;
+  }
+
+
+  .label {
+	position: absolute;
+	top: -7px;
+	left: 15px;
+  }
+  .label::after {
+	position: absolute;
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 35px solid transparent;
+	border-top: 6px solid #3498db;
+  }
+  .label span {
+	position: relative;
+	display: inline-block;
+	width: 84px;
+	padding: 12px 8px 6px;
+	background: #3498db;
+	border-radius: 0 8px 0 0;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1;
+	text-align: center;
+  }
+  .label span::before,
+  .label span::after {
+	position: absolute;
+	content: '';
+	display: block;
+  }
+  .label span::before {
+	top: 0;
+	left: -6px;
+	width: 6px;
+	height: 7px;
+	background: #3498db;
+  }
+  .label span::after {
+	top: 0;
+	left: -8px;
+	height: 7px;
+	width: 8px;
+	background: #888;
+	border-radius: 8px 8px 0 0;
+  }
+
+
+
+
+
   /* Users Table */
 .users-table{
 	width: 100%;
@@ -232,4 +302,118 @@ color: black;
 }
 .cart-table table tr td.actions a:hover{
 color: black;
+}
+
+
+  /* Order Table */
+
+
+.make-order-table table tr td {
+	font-size: 16px;
+	color: #252525;
+	font-weight: 700;
+	border-bottom: 1px solid #ebebeb;
+	text-align: center;
+	padding-top: 20px;
+	border-collapse:separate; 
+border-spacing:5em;
+
+}
+
+.make-order-table table tr {
+	padding: 5px;
+	margin-top:5px;
+	margin-bottom: 15px;
+}
+
+.order-product-name {
+	text-align: left;
+	width: 30%;
+	color: #252525;
+}
+
+.order-product-quantity {
+	text-align: center;
+	width: 20%;
+	color: #252525;
+}
+.order-product-quantity-input{
+	width: 50%;
+}
+
+.order-product-total{
+	text-align: center;
+	width: 30%;
+	color: #252525;
+}
+
+
+.order-product-delete {
+	text-align: center;
+	width: 20%;
+}
+.remove-product{
+	cursor: pointer;
+}
+.remove-product:hover{
+	background-color: #64c5e2;
+	color: black;
+}
+
+
+
+
+
+
+
+th,td
+{
+    padding:10px;
+    position:relative;
+    text-align:center;
+    color:rgba(0,0,0,0.7);
+    cursor:default;
+}
+
+th
+{
+    background-color:rgba(0,0,0,0.3);
+}
+
+tbody th
+{
+    text-align:left;
+    white-space:nowrap;
+}
+
+td
+{
+    background-color:rgba(0,255,255,0.1);
+}
+
+tbody>tr:hover th,tbody>tr:hover td
+{
+    background:rgba(255,255,255,0.2);
+}
+
+td:hover:after,thead th:hover:after
+{
+    content:"";
+    position:absolute;
+    z-index:-2;
+    top:-5000px;
+    left:0;
+    width:100%;
+    background:rgba(255,255,255,0.2);
+}
+
+thead tr th:first-child:hover:after
+{
+    content:"";
+    position:absolute;
+    z-index:-2;
+    top:-5000px;
+    left:0;
+    width:100%;
+    background:rgba(0,0,0,0.01);
 }

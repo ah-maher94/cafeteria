@@ -191,9 +191,9 @@ if(isset($_GET['id'])){
       <td class='order-product-name'>".$row['productName']."</td>
       <td class='order-product-quantity'>
       <input type='number' min='1' name='quantity[]' class='order-product-quantity-input' value='1'>
-      <input type='hidden' class='hidden-price' value='".$row['productPrice']."'></td>
+      <input type='hidden' class='hidden-price' name='productPrice[]' value='".$row['productPrice']."'></td>
       <td class='order-product-total'><span class='total-price'>".$row['productPrice']." EGP</span></td>
-      <td class='order-product-delete'><i class='ti-close remove-product' id='".$row['productId']."'></i></a></td>
+      <td class='order-product-delete'><i class='p-3 ti-close remove-product' id='".$row['productId']."'></i></a></td>
       </tr>";
 
 

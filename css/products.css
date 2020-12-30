@@ -162,3 +162,12 @@ text-align: center;
 .addCategoryLabel:hover{
     background-color: blue;
 }
+
+
+.wrapperAll{
+    height: 200px;
+}
+
+.wrapperLatest{
+    height: 120px
+}

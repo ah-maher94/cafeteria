@@ -23,9 +23,17 @@ require_once("checkCookies.php");
 
 
         $productId = $_POST['productId'];
-        $prdoctQuantity= $_POST['quantity'];
+        $productQuantity= $_POST['quantity'];
         $notes = $_POST['notes'];
         $roomId = $_POST['userRoom'];
+        $productPrice = $_POST["productPrice"];
+        $totalPrice = 0;
+
+        // Count Total Price
+        for($eachProduct = 0; $eachProduct < count($productId); $eachProduct++){
+            $totalPrice += $productPrice[$eachProduct] * $productQuantity[$eachProduct];
+        }
+
         if($_COOKIE['userRole'] == 'admin'){
             $userId = $_POST['user-order-name'];
         }
@@ -39,9 +47,9 @@ require_once("checkCookies.php");
             values (?, now(), ?, ?, ?, ?)";
             $stmt = $db->prepare($selectProduct);
             if($_COOKIE['userRole'] == 'user'){
-                $res = $stmt->execute(['Processing', $notes, 500, $_COOKIE['userID'], 1]);
+                $res = $stmt->execute(['Processing', $notes, $totalPrice, $_COOKIE['userID'], 1]);
             }else{
-                $res = $stmt->execute(['Processing', $notes, 500, $userId, 1]);
+                $res = $stmt->execute(['Processing', $notes, $totalPrice, $userId, 1]);
             }
 
             $selectProduct = "insert into userroomorder (userId, roomId, orderId) 
@@ -57,7 +65,7 @@ require_once("checkCookies.php");
                 $insertProducts = "insert into productOrder (productId, orderId, quantity) 
                 values ( ?, LAST_INSERT_ID(), ?)";
                 $insertProductsStmt = $db->prepare($insertProducts);
-                $insertProductRes = $insertProductsStmt->execute([ $productId[$eachProduct] ,$prdoctQuantity[$eachProduct] ]);
+                $insertProductRes = $insertProductsStmt->execute([ $productId[$eachProduct] ,$productQuantity[$eachProduct] ]);
             }
 
             $db->commit();
