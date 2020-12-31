@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 setcookie('userRole','admin');
             }
             $_POST = array();
-            header ('location: checks.php');
+            header ('location: index.php');
             exit;
             $username ="";
             $password ="" ;
@@ -101,7 +101,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>Login</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -141,37 +141,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="ht-left">
                     <div class="mail-service">
                         <i class=" fa fa-envelope"></i>
-                        hello.colorlib@gmail.com
+                        cafeteria.iti@gmail.com
                     </div>
                     <div class="phone-service">
                         <i class=" fa fa-phone"></i>
-                        +65 11.188.888
+                        01010101010
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    <?php
-                        // if($_post['username'] == ){
-
-                        //     $costmer = $_POST['costmer'];  
-                        //     if ($costmer == "1") {          
-                        //         // $query = "select * from `users` where `userEmail`=? and `userPassword`=?";
-
-                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome user</a>`;
-
-                        //     }
-                        //     else {
-                        //         // $query = "select * from `admin` where `adminName`=? and `adminPassword`=?";
-                        //         `<a href="#" class="login-panel"><i class="fa fa-user"></i>welcome admin</a>`;
-                        //     } 
-                        // }
-                    ?>
+                    <a href="#" class="login-panel logout"><i class="fa fa-user"></i>Logout</a>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
                                 data-title="English">English</option>
-                            <option value='yu' data-image="img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Bangladesh">German </option>
+                            <option value='yu' data-image="img/egypt-flag-icon.png" data-imagecss="flag yu"
+                                data-title="Arabic">Arabic </option>
                         </select>
                     </div>
                     <div class="top-social">
@@ -187,13 +171,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="inner-header">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="./index.html">
-                                <img src="img/logo.png" alt="">
+                    <div class="logo">
+                            <a href="./index.php">
+                            <i class="fa fa-coffee fa-3x"  style="color:black" aria-hidden="true"></i>
                             </a>
+                                <p class='typewriter'>.
+                                <span class='typewriter-text' data-text='[ " World&#39;s #0 Cafeteria. ", "Coffee <br> ", "ITI Cafeteria. " ]'></span>
+                                </p>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-lg-7">
+                    <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="#" class="input-group">
@@ -202,60 +189,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-3 text-right col-lg-3">
-                        <ul class="nav-right">
-                            <li class="heart-icon"><a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
-                            </li>
-                            <li class="cart-icon"><a href="#">
-                                    <i class="icon_bag_alt"></i>
-                                    <span>3</span>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="cart-price">$150.00</li>
-                        </ul>
+                    <div class="col-lg-3 text-right col-md-3">
+
                     </div>
                 </div>
             </div>
@@ -265,42 +200,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
-                        <span>All departments</span>
+                        <span>All Products</span>
                         <ul class="depart-hover">
-                            <li class="active"><a href="#">Women’s Clothing</a></li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li><a href="#">Underwear</a></li>
-                            <li><a href="#">Kid's Clothing</a></li>
-                            <li><a href="#">Brand Fashion</a></li>
-                            <li><a href="#">Accessories/Shoes</a></li>
-                            <li><a href="#">Luxury Brands</a></li>
-                            <li><a href="#">Brand Outdoor Apparel</a></li>
+                            <li class="active"><a href="./products.php">Espresso</a></li>
+                            <li><a href="./products.php">Hot Drinks</a></li>
+                            <li><a href="./products.php">Coffee</a></li>
+                            <li><a href="./products.php">Tea</a></li>
+                            <li><a href="./products.php">Cold Drinks</a></li>
                         </ul>
                     </div>
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Men's</a></li>
-                                <li><a href="#">Women's</a></li>
-                                <li><a href="#">Kid's</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
-                                <li><a href="./faq.html">Faq</a></li>
-                                <li><a href="./register.html">Register</a></li>
-                                <li><a href="./login.html">Login</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="./index.php">Home</a></li>
+                        <li><a href="./view-orders.php">My Orders</a></li>
+                        <li><a href="./view-users.php">Users</a></li>
+                        <li><a href="./main-shop.php">Manual Order</a></li>
+                        <li><a href="./checks.php">Checks</a></li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -308,6 +224,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </div>
     </header>
     <!-- Header End -->
+
 
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -344,10 +261,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <span class="help-block"><?php echo $password_err;?></span>
                               
                             </div>
-                            <div class="">        
+                            <div class="my-4">        
                                 
                                 <input type="radio" id="user" name="costmer" value="1"> User
-                                <input type="radio" id="admin" name="costmer" value="2"> Admin
+                                <input type="radio" class="ml-3" id="admin" name="costmer" value="2"> Admin
                                 <span class="help-block"><?php echo $userType_err;?></span>
                             </div>
                             <div class="group-input gi-check">
@@ -362,9 +279,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             </div>
                             <button type="submit" class="site-btn login-btn" name="submitBtnLogin">Sign In</button>
                         </form>
-                        <div class="switch-login">
-                            <a href="./register.php" class="or-login">Or Create An Account</a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -373,7 +288,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <!-- Register Form Section End -->
 
     <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
+<!--     <div class="partner-logo">
         <div class="container">
             <div class="logo-carousel owl-carousel">
                 <div class="logo-item">
@@ -403,7 +318,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Partner Logo Section End -->
 
     <!-- Footer Section Begin -->
@@ -413,12 +328,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                        <a href="./index.php">
+                            <i class="fa fa-coffee fa-3x"  style="color:white" aria-hidden="true"></i>
+                            </a>
+                                <p class='typewriter typeFooter'>.
+                                <span class='typewriter-text typeFooterText' data-text='[ " World&#39;s #0 Cafeteria. ", "Coffee <br> ", "ITI Cafeteria. " ]'></span>
+                                </p>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello.colorlib@gmail.com</li>
+                            <li>Address: Cairo, Egypt</li>
+                            <li>Phone: 01010101010</li>
+                            <li>Email: cafeteria.iti@gmail.com</li>
                         </ul>
                         <div class="footer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
@@ -435,7 +355,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Checkout</a></li>
                             <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
+                            <li><a href="#">Services</a></li>
                         </ul>
                     </div>
                 </div>
@@ -468,11 +388,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="col-lg-12">
                         <div class="copyright-text">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">ITI TEAM</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                         <div class="payment-pic">
-                            <img src="img/payment-method.png" alt="">
+                            <!-- <img src="img/payment-method.png" alt=""> -->
                         </div>
                     </div>
                 </div>

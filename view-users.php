@@ -2,6 +2,9 @@
             require_once("config.php");
             require_once("checkCookies.php");
 
+            if($_COOKIE['userRole'] == 'user'){
+                header('Location: ./index.php');
+            }
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
             }else{
@@ -53,15 +56,15 @@
                 <div class="ht-left">
                     <div class="mail-service">
                         <i class=" fa fa-envelope"></i>
-                        ahmed.maher0094@gmail.com
+                        cafeteria.iti@gmail.com
                     </div>
                     <div class="phone-service">
                         <i class=" fa fa-phone"></i>
-                        01020214736
+                        01010101010
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    <a href="#" class="login-panel logout"><i class="fa fa-user"></i>Logout</a>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
@@ -83,10 +86,13 @@
             <div class="inner-header">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="./index.html">
-                                <img src="img/logo.png" alt="">
+                    <div class="logo">
+                            <a href="./index.php">
+                            <i class="fa fa-coffee fa-3x"  style="color:black" aria-hidden="true"></i>
                             </a>
+                                <p class='typewriter'>.
+                                <span class='typewriter-text' data-text='[ " World&#39;s #0 Cafeteria. ", "Coffee <br> ", "ITI Cafeteria. " ]'></span>
+                                </p>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
@@ -109,30 +115,23 @@
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
-                        <span>All Departments</span>
+                        <span>All Products</span>
                         <ul class="depart-hover">
-                            <li class="active"><a href="#">Espresso</a></li>
-                            <li><a href="#">Hot Drinks</a></li>
-                            <li><a href="#">Coffee</a></li>
-                            <li><a href="#">Tea</a></li>
-                            <li><a href="#">Cold Drinks</a></li>
+                            <li class="active"><a href="./products.php">Espresso</a></li>
+                            <li><a href="./products.php">Hot Drinks</a></li>
+                            <li><a href="./products.php">Coffee</a></li>
+                            <li><a href="./products.php">Tea</a></li>
+                            <li><a href="./products.php">Cold Drinks</a></li>
                         </ul>
                     </div>
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./shop.html">My Orders</a></li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                <li><a href="./check-out.html">Checkout</a></li>
-                                <li><a href="./faq.html">Faq</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="./index.php">Home</a></li>
+                        <li><a href="./view-orders.php">My Orders</a></li>
+                        <li><a href="./view-users.php">Users</a></li>
+                        <li><a href="./main-shop.php">Manual Order</a></li>
+                        <li><a href="./checks.php">Checks</a></li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -147,7 +146,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="./home.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="./index.php"><i class="fa fa-home"></i> Home</a>
                         <span>Users</span>
                     </div>
                 </div>
@@ -362,12 +361,17 @@
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                        <a href="./index.php">
+                            <i class="fa fa-coffee fa-3x"  style="color:white" aria-hidden="true"></i>
+                            </a>
+                                <p class='typewriter typeFooter'>.
+                                <span class='typewriter-text typeFooterText' data-text='[ " World&#39;s #0 Cafeteria. ", "Coffee <br> ", "ITI Cafeteria. " ]'></span>
+                                </p>
                         </div>
                         <ul>
                             <li>Address: Cairo, Egypt</li>
-                            <li>Phone: 01020214736</li>
-                            <li>Email: ahmed.maher0094@gmail.com</li>
+                            <li>Phone: 01010101010</li>
+                            <li>Email: cafeteria.iti@gmail.com</li>
                         </ul>
                         <div class="footer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
@@ -384,7 +388,7 @@
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Checkout</a></li>
                             <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
+                            <li><a href="#">Services</a></li>
                         </ul>
                     </div>
                 </div>

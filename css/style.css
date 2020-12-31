@@ -8,6 +8,44 @@ body {
 	font-smoothing: antialiased;
 }
 
+
+
+	/* Logo */
+  .typewriter {
+	font-family: sans-serif;
+	color: #fff;
+	display: block;
+  }
+  .typewriter-text {
+	color: #131312;
+	border-right: solid #131312 7px;
+	text-transform: uppercase;
+	animation: cursor 1s ease-in-out infinite;
+	font-weight: bold;
+  }
+  @keyframes cursor {
+	from { border-color: #131312; }
+	to { border-color: transparent; }
+  }
+  
+  @media (max-width: 767.98px) {
+	.typewriter { font-size: 11px; }
+  }
+  @media (min-width: 768px) {
+	.typewriter { font-size: 11px; }
+  }
+  
+  .typeFooter {
+	color: #131312;
+  }
+
+  .typeFooterText{
+	color:  #fff;
+	border-right: solid  #fff 7px;
+  }
+
+  
+
 h1,
 h2,
 h3,

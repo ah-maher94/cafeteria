@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+
     // Check Login
     $(".logout").click(function () {
         $.post('checkCookies.php',{
