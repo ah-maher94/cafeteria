@@ -1,0 +1,45 @@
+
+.subscribe-button{
+    color: white;
+    background-color:  rgb(192, 118, 14);
+    border: none;
+}
+.search-align{
+    position: absolute;
+    top: 5vh;
+    left: 60%;
+   transform: translateX(-100px);
+}
+.align-drop{
+    height: 2px;
+}
+.result-align{
+    position: absolute;
+    top: -38.5%;
+    left: 60%;
+    min-width:20vw;
+    border-top: none;
+}
+.user-align{
+    position: absolute;
+    top: -42%;
+    left: 60%;
+    min-width:20vw;
+    border-top: none;
+}
+/* .dropme{
+    position: relative;
+    /* top: -10%; 
+    left: 80%;
+    max-width:12vw;
+    border-top: none;
+} */
+.bb{
+    border-bottom: none;
+}
+.search-btn{
+    background-color: rgb(173, 17, 67);
+}
+.productsearch{
+    color: black;
+}

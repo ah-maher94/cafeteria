@@ -19,7 +19,7 @@ if(isset($_GET["id"])){
         echo 
         "<div class='col-6 col-sm-4 col-md-3 wrapper align-items-end justify-content-center'>
             <div class='card productCard text-center' style='width: 70%; height: 100%'>
-            <img class='card-img-top' height='70%' src='../img/".$col['productImage']."' alt='Card image cap'>
+            <img class='card-img-top' height='70%' src='img/product/".$col['productImage']."' alt='Card image cap'>
             <div class='card-body'>
                 <h3><span class='badge badge-pill badge-light'>".$col['productName']."</span></h3>
                 <h4><span class='badge badge-pill badge-light'>".$col['productPrice']*$col['quantity']."</span></h4>

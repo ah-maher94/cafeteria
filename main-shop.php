@@ -43,6 +43,8 @@ $user->database_con();
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/orders-users.css" type="text/css">
     <link rel="stylesheet" href="css/products.css" type="text/css">
+    <link rel="stylesheet" href="css/stylesheet.css" type="text/css">
+
 
     <style>
     #productcontainer{
@@ -108,8 +110,8 @@ $user->database_con();
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="#" class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <input type="text" placeholder="What do you need?" class="productsearch">
+                                <button type="button"><i class="ti-search "></i></button>
                             </form>
                         </div>
                     </div>
@@ -140,7 +142,12 @@ $user->database_con();
                         <li><a href="./view-orders.php">My Orders</a></li>
                         <li><a href="./view-users.php">Users</a></li>
                         <li><a href="./main-shop.php">Manual Order</a></li>
-                        <li><a href="./checks.php">Checks</a></li>
+                        <li><a href="#">Checks</a>
+                            <ul class="dropdown">
+                                <li><a href="checks.php">checks</a></li>
+                                <li><a href="ordersPage.php">orders</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -182,9 +189,10 @@ $user->database_con();
 
 </div>
 
-
-
-
+    <div name="select" id="select" class="result-align">
+        <div class="dropme">
+        </div>
+    </div>
    <?php
 
 
@@ -298,37 +306,14 @@ echo "</div>";
    <hr style='bprder:2px solid #000;'>
 
 
-      <?php
+      
 
+      <div class='lastProduct'>
+        <?php
+            require_once('displayProducts.php');
+        ?>
+      </div>
 
-$rows=$user->showproducts();
-
-echo "<div class='row justify-content-between'>";
-
-  foreach($rows as $row){
-
-
-    echo "<div class='col-6 col-sm-4 col-md-4 wrapperAll align-items-end justify-content-center'>
-    <div class='card productCard homeUser-products text-center'  style='width: 70%; height: 100%'>
-    <input type='hidden' name='id' value='".$row['productId']."' />
-    <img class='card-img-top buy' id='".$row['productId']."' height='65%' src='img/product/".$row['productImage']."' alt='Product'>
-    <input type='hidden' value='".$row['productPrice']."'>
-    <div class='card-title'>
-        <h4><span class='badge badge-pill badge-light'>".$row['productName']."</span></h4>
-    </div>
-    </div>
-    <span class='label'><span name='".$row['productPrice']."'>".$row['productPrice']." EGP</span></span>
-</div>";
-
-
-        
-
-}
-
-
- 
-
-?>
       </div>    
    </div>
  </div>
@@ -547,5 +532,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     
 </body>
-
+<script src="productSearch.js"></script>
 </html>

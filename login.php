@@ -1,8 +1,8 @@
 <?php
+session_start();
 // Include config file
 require_once "ORMclass.php";
-
-session_start();  
+ 
 $message = "";  
 
 $username = $password = "";
@@ -38,24 +38,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         try {
             $costmer = $_POST['costmer'];  
         if ($costmer == "1") {          
-            $query = "select * from `users` where `userName`='".$username."' and `userPassword`='".md5($password)."'";
+            $query = "select * from `users` where `userEmail`='".$username."' and `userPassword`='".md5($password)."'";
         }
         else {
             $query = "select * from `admin` where `adminName`='".$username."' and `adminPassword`='".$password."'";
         } 
         $users=new ORM();
-        $connect=$users ->connect('cafeteria-php-project','3306','root','1894');
+        
+        $connect=$users ->connect('cafateria','3306','root','sayed771995');
         $res=$users -> executeQuery($query);
         $records=$res -> fetchAll(PDO::FETCH_ASSOC);
-        var_dump($records);
+        // var_dump($records);
         $count = $res->rowCount();
         if($count == 1 && !empty($records)) {
-            session_start();
+            // session_start();
             setcookie('login','true');
             setcookie('userID',$records[0]['userId']);
             if(isset($_POST['remember']))
             {
-                setcookie('remember','true');
+                
             }
             if($costmer == "1")
             {
@@ -77,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         } else {
             // header ('location: ./login.html');
-            $name_err = "Invalid username!";
+            $name_err = "Invalid Email Address!";
             $password_err = "Invalid password!";
         
         }
@@ -250,7 +251,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <h2>Login</h2>
                         <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
                             <div class="group-input <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                                <label for="username">Username or email address *</label>
+                                <label for="username">Email address *</label>
                                 <input type="text" id="username" name="username"  value="<?php echo $username; ?>" >
                                 <span class="help-block"><?php echo $name_err;?></span>
                                

@@ -131,7 +131,12 @@ if($_COOKIE['userRole'] == 'user'){
                         <li><a href="./view-orders.php">My Orders</a></li>
                         <li><a href="./view-users.php">Users</a></li>
                         <li><a href="./main-shop.php">Manual Order</a></li>
-                        <li><a href="./checks.php">Checks</a></li>
+                        <li><a href="#">Checks</a>
+                            <ul class="dropdown">
+                                <li><a href="checks.php">checks</a></li>
+                                <li><a href="ordersPage.php">orders</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -171,7 +176,7 @@ if($_COOKIE['userRole'] == 'user'){
           <div class="input-group mt-3 mb-3">
             <div class="input-group-prepend">
               <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-                Dropdown button
+                Choose user
               </button>
               <div class="dropdown-menu">
                

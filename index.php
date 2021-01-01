@@ -121,7 +121,13 @@ require_once("checkCookies.php");
                         <li><a href="./view-orders.php">My Orders</a></li>
                         <li><a href="./view-users.php">Users</a></li>
                         <li><a href="./main-shop.php">Manual Order</a></li>
-                        <li><a href="./checks.php">Checks</a></li>
+                        <!-- <li><a href="#">Checks</a></li> -->
+                        <li><a href="#">Checks</a>
+                            <ul class="dropdown">
+                                <li><a href="checks.php">checks</a></li>
+                                <li><a href="ordersPage.php">orders</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>

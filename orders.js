@@ -20,7 +20,7 @@ $(document).ready(function(){
             }
             $.ajax({
                 type: 'GET',
-                url: '../php_project/display-order-details.php',
+                url: 'order-details/display-order-details.php',
                 data: 'id=' + $(this).attr("id"),
                 success: function(order){
                     var stringsub=order.split('</f>');

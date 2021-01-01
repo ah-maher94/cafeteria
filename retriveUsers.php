@@ -13,7 +13,7 @@ if(isset($_POST['Name']))
      if($_POST['Name']=='username')
      {
         $users=new ORM();
-        $connect=$users ->connect('cafeteria-php-project','3306','root','1894');
+        $connect=$users ->connect('cafateria','3306','root','sayed771995');
         $res=$users -> select('users','userName,userId');
         $records=$res -> fetchAll(PDO::FETCH_ASSOC);
         for($i=0;$i<count($records);$i++)

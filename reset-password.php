@@ -211,7 +211,7 @@
         <!-- Redirect -->
         <div class="modal-body editUserModalBody">
 
-        Password changed successfully, Please Login <a href='./login.php'><h4 style="display:inline-block"><span class='badge badge-info p-1'>here</span></h4></a>
+        Password changed successfully, Please Login <a href='login.php'><h4 style="display:inline-block"><span class='badge badge-info p-1'>here</span></h4></a>
 
         </div>
 

@@ -42,6 +42,8 @@ $user->database_con();
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/orders-users.css" type="text/css">
     <link rel="stylesheet" href="css/products.css" type="text/css">
+    <link rel="stylesheet" href="css/stylesheet.css" type="text/css">
+
 
     <style>
     #productcontainer{
@@ -107,7 +109,7 @@ $user->database_con();
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="#" class="input-group">
-                                <input type="text" placeholder="What do you need?">
+                                <input type="text" placeholder="What do you need?" class="productsearch" style="color: black">
                                 <button type="button"><i class="ti-search"></i></button>
                             </form>
                         </div>
@@ -181,10 +183,12 @@ $user->database_con();
 
 
 </div>
+    <div name="select" id="select" class="user-align">
+        <div class="dropme">
+        </div>
+    </div>
 
-
-
-
+ 
    <?php
 
 
@@ -273,38 +277,12 @@ echo "</div>";
 ?>
 
    <hr style='bprder:2px solid #000;'>
+   <div class='lastProduct'>
+        <?php
+            require_once('displayProducts.php');
+        ?>
+      </div>
 
-
-      <?php
-
-
-$rows=$user->showproducts();
-
-echo "<div class='row justify-content-between'>";
-
-  foreach($rows as $row){
-
-
-    echo "<div class='col-6 col-sm-4 col-md-4 wrapperAll align-items-end justify-content-center'>
-    <div class='card productCard homeUser-products text-center' name='' style='width: 70%; height: 100%'>
-    <input type='hidden' name='id' value='".$row['productId']."' />
-    <img class='card-img-top buy pt-2' id='".$row['productId']."' height='65%' src='img/product/".$row['productImage']."' alt='Product'>
-    <div class='card-title'>
-        <h4><span class='badge badge-pill badge-light'>".$row['productName']."</span></h4>
-    </div>
-    </div>
-    <span class='label'><span name='".$row['productPrice']."'>".$row['productPrice']." EGP</span></span>
-</div>";
-
-
-        
-
-}
-
-
- 
-
-?>
       </div>    
    </div>
  </div>
@@ -520,5 +498,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     
 </body>
-
+<script src="productSearch.js"></script>
 </html>

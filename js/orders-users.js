@@ -274,6 +274,12 @@ $(document).ready(function(){
     });
 
 
+    // Add New Product
+    $("#newUser").click(function(){
+        location.href = "./add-user.php";
+    });
+    
+
     // Add New Category
     $("#addCategory").click(function(){
         $("#insertCategoryModal").modal("show");

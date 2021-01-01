@@ -12,11 +12,7 @@ $(document).ready(function(){
     $('#dateFrom').blur(function(e){
         if(e.target.value)
         {
-            // $.post('../php_project/retriveUsers.php',{
-            //     dateFrom: e.target.value
-            // },function(data,status){
-            //     $("#orders").html(data);
-            // });
+
             datefrom=e.target.value;
              
         } 
@@ -34,12 +30,6 @@ $(document).ready(function(){
             dateto=0;
         }
         
-        // $.post('../php_project/retriveUsers.php',{
-        //     dateTo: e.target.value,
-        //     dateFrom: datefrom 
-        // },function(data,status){
-        //     $("#orders").html(data);
-        // });
     });
     
     $.post('retriveUsers.php',{
@@ -77,7 +67,7 @@ $(document).ready(function(){
                 $(".orderrow").click(function(){
                     $.ajax({
                         type: 'GET',
-                        url: 'order-details/display-order-details.php',
+                        url: 'display-order-details.php',
                         data: 'id=' + $(this).attr("id"),
                         success: function(order){
                             $("#selectedOrder").html(order);

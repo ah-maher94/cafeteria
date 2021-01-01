@@ -15,3 +15,13 @@
         setcookie('userRole');
     }
 ?>
+<!-- <script>
+    if(localStorage.getItem('remember')=='true')
+    {
+        
+    }
+    else
+    {
+        header ('location: login.php');
+    }
+</script> -->

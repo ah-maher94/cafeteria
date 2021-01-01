@@ -19,9 +19,9 @@ require_once("checkCookies.php");
     // connect to database
     function database_con(){
         
-        $dsn="mysql:dbname=cafeteria-php-project;dbhost=127.0.0.1;dbport=3306";
+        $dsn="mysql:dbname=cafateria;dbhost=127.0.0.1;dbport=3306";
          Define("DB_USER","root");
-         Define("DB_PASS","1894");
+         Define("DB_PASS","sayed771995");
          $this->db= new PDO($dsn,DB_USER,DB_PASS);
  
          try{

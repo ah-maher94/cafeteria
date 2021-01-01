@@ -3,7 +3,7 @@
             require_once("checkCookies.php");
 
             if($_COOKIE['userRole'] == 'admin'){
-                header('Location: ./index.php');
+                header('Location: ./ordersPage.php');
             }
 
             if(isset($_GET['page'])){
